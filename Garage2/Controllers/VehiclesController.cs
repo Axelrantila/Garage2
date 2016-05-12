@@ -89,10 +89,54 @@ namespace Garage2.Controllers
             return View(vehicle);
         }
 
+        // GET: Vehicles/Receipt/5
+        public ActionResult Receipt( int? id ) {
+            if ( id == null ) {
+                return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
+            }
+            Vehicle vehicle = db.Vehicles.Find( id );
+            if ( vehicle == null ) {
+                return HttpNotFound();
+            }
+
+            ViewBag.ParkingPeriod = DateTime.Now - vehicle.TimeParked;
+            ViewBag.Cost = ((int)((ViewBag.ParkingPeriod - new TimeSpan( 0, 1, 0 )).TotalHours) + 1) * 60;
+
+            return View( vehicle );
+        }
+
+
         // GET: Vehicles/Create
         public ActionResult Create()
         {
             return View();
+        }
+
+        public ActionResult Search(string Owner, string LicenseNr, string Length, string Weight)
+        {
+            float fLength = -1;
+            float fWeight = -1;
+
+            try
+            {
+                fLength = float.Parse(Length);
+            }
+            catch (Exception) { }
+
+            try
+            {
+                fWeight = float.Parse(Weight);
+            }
+            catch (Exception) { }
+
+            var result = db.Vehicles
+                .Where(v => string.IsNullOrEmpty(Owner) || v.Owner == Owner)
+                .Where(v => string.IsNullOrEmpty(LicenseNr) || v.LicenseNr == LicenseNr)
+                .Where(v => fLength == -1 || v.Length == fLength)
+                .Where(v => fWeight == -1 || v.Weight == fWeight)
+                .ToList();
+
+            return View(result);
         }
 
         // POST: Vehicles/Create
@@ -102,7 +146,8 @@ namespace Garage2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,TimeParked,Parked")] Vehicle vehicle)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid
+                && vehicle.TypeOfVehicle != VehcileType.None)
             {
                 db.Vehicles.Add(vehicle);
                 db.SaveChanges();

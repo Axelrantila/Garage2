@@ -62,6 +62,7 @@ namespace Garage2.Controllers
         public ActionResult PreviousCars(string listPreviousCars)
         {
             bool includePrevious = false;
+            List<Vehicle> model;
             try
             {
                 includePrevious = Convert.ToBoolean(listPreviousCars);
@@ -70,7 +71,14 @@ namespace Garage2.Controllers
             {
                 includePrevious = false;
             }
-            List<Vehicle> model = db.Vehicles.Where(item => item.Parked == includePrevious).ToList();
+            if (includePrevious)
+            {
+                model = db.Vehicles.ToList();
+            }
+            else
+            {
+                model = db.Vehicles.Where(item => item.Parked == true).ToList();
+            }
             return View("OverView", model);
         }
 

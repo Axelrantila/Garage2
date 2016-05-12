@@ -161,7 +161,7 @@
       <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>      
+  <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -250,6 +250,8 @@
     <Content Include="Views\Vehicles\Index.cshtml" />
     <Content Include="Views\Vehicles\_Search.cshtml" />
     <Content Include="Views\Vehicles\Search.cshtml" />
+    <Content Include="Views\Vehicles\OverView.cshtml" />
+    <Content Include="Views\Vehicles\Receipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

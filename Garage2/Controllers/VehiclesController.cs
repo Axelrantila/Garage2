@@ -18,9 +18,48 @@ namespace Garage2.Controllers
         // GET: Vehicles
         public ActionResult Index()
         {
-            return View(db.Vehicles.ToList());
+            return View("OverView", db.Vehicles.ToList());
         }
 
+        public ActionResult SortBy(string sortby)
+        {
+            if (sortby == string.Empty)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            
+            List<Vehicle> model = db.Vehicles.ToList();
+            switch (sortby.ToLower())
+            {
+                case "owner":
+                    model.Sort((item1, item2) => item1.Owner.CompareTo(item2.Owner));
+                    break;
+                case "Licensenr":
+                    model.Sort((item1, item2) => item1.LicenseNr.CompareTo(item2.LicenseNr));
+                    break;
+                case "TypeOfVehicle":
+                    model.Sort((item1, item2) => item1.TypeOfVehicle.CompareTo(item2.TypeOfVehicle));
+                    break;
+                case "length":
+                    model.Sort((item1, item2) => item1.Length.CompareTo(item2.Length));
+                    break;
+                case "weight":
+                    model.Sort((item1, item2) => item1.Weight.CompareTo(item2.Weight));
+                    break;
+                case "timeparked":
+                    model.Sort((item1, item2) => item1.TimeParked.CompareTo(item2.TimeParked));
+                    break;
+                case "parked":
+                    model.Sort((item1, item2) => item1.Parked.CompareTo(item2.Parked));
+                    break;
+                default:
+                    break;
+            }
+
+            return View("OverView", model);
+        }
+    
+        
         // GET: Vehicles/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,6 +74,23 @@ namespace Garage2.Controllers
             }
             return View(vehicle);
         }
+
+        // GET: Vehicles/Receipt/5
+        public ActionResult Receipt( int? id ) {
+            if ( id == null ) {
+                return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
+            }
+            Vehicle vehicle = db.Vehicles.Find( id );
+            if ( vehicle == null ) {
+                return HttpNotFound();
+            }
+
+            ViewBag.ParkingPeriod = DateTime.Now - vehicle.TimeParked;
+            ViewBag.Cost = ((int)((ViewBag.ParkingPeriod - new TimeSpan( 0, 1, 0 )).TotalHours) + 1) * 60;
+
+            return View( vehicle );
+        }
+
 
         // GET: Vehicles/Create
         public ActionResult Create()
@@ -74,11 +130,12 @@ namespace Garage2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,TimeParked,Parked")] Vehicle vehicle)
+        public ActionResult Create([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,Parked")] Vehicle vehicle)
         {
             if (ModelState.IsValid
                 && vehicle.TypeOfVehicle != VehcileType.None)
             {
+                vehicle.TimeParked = DateTime.Now;
                 db.Vehicles.Add(vehicle);
                 db.SaveChanges();
                 return RedirectToAction("Index");

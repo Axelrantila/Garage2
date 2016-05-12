@@ -7,6 +7,7 @@ namespace Garage2.Models
 {
     public enum VehcileType
     {
+        None,
         Car,
         SUV,
         Motorcycle,

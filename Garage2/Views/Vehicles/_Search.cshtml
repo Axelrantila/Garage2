@@ -5,9 +5,13 @@
 </p>
 <form method="get" id="searchParams">
     Owner
-    <input type="search" name="owner" /><br />
+    <input type="search" name="Owner" /><br />
     LicenseNr
-    <input type="search" name="licenseNr" /><br />
+    <input type="search" name="LicenseNr" /><br />
+    
+
+    @Html.EnumDropDownListFor(model => model.First().TypeOfVehicle, htmlAttributes: new { @class = "form-control" })
+
 
 
     <input type="submit" value="Search"/>

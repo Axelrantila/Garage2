@@ -42,12 +42,18 @@ namespace Garage2.Controllers
             return View();
         }
 
-        public ActionResult Search(string owner, string licenseNr)
+        public ActionResult Search(string Owner, string LicenseNr, VehcileType? TypeOfVehicle)
         {
             var result = db.Vehicles
-                .Where(v => string.IsNullOrEmpty(owner) || v.Owner == owner)
-                .Where(v => string.IsNullOrEmpty(licenseNr) || v.LicenseNr == licenseNr)
+                .Where(v => string.IsNullOrEmpty(Owner) || v.Owner == Owner)
+                .Where(v => string.IsNullOrEmpty(LicenseNr) || v.LicenseNr == LicenseNr)
                 .ToList();
+
+            if (TypeOfVehicle != null)
+            {
+                result = result.Where(v => v.TypeOfVehicle == TypeOfVehicle
+                || TypeOfVehicle == VehcileType.None).ToList();
+            }
 
             return View(result);
         }

@@ -75,6 +75,23 @@ namespace Garage2.Controllers
             return View(vehicle);
         }
 
+        // GET: Vehicles/Receipt/5
+        public ActionResult Receipt( int? id ) {
+            if ( id == null ) {
+                return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
+            }
+            Vehicle vehicle = db.Vehicles.Find( id );
+            if ( vehicle == null ) {
+                return HttpNotFound();
+            }
+
+            ViewBag.ParkingPeriod = DateTime.Now - vehicle.TimeParked;
+            ViewBag.Cost = ((int)((ViewBag.ParkingPeriod - new TimeSpan( 0, 1, 0 )).TotalHours) + 1) * 60;
+
+            return View( vehicle );
+        }
+
+
         // GET: Vehicles/Create
         public ActionResult Create()
         {

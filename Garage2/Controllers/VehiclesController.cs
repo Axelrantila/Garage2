@@ -18,7 +18,7 @@ namespace Garage2.Controllers
         // GET: Vehicles
         public ActionResult Index()
         {
-            return View("OverView", db.Vehicles.ToList());
+            return View("Index", db.Vehicles.ToList());
         }
 
         public ActionResult SortBy(string sortby)
@@ -56,16 +56,16 @@ namespace Garage2.Controllers
                     break;
             }
 
-            return View("OverView", model);
+            return View("Index", model);
         }
 
-        public ActionResult PreviousCars(string listPreviousCars)
+        public ActionResult PreviousVehicles(string listPreviousVehicles)
         {
             bool includePrevious = false;
             List<Vehicle> model;
             try
             {
-                includePrevious = Convert.ToBoolean(listPreviousCars);
+                includePrevious = Convert.ToBoolean(listPreviousVehicles);
             }
             catch (Exception)
             {
@@ -79,7 +79,7 @@ namespace Garage2.Controllers
             {
                 model = db.Vehicles.Where(item => item.Parked == true).ToList();
             }
-            return View("OverView", model);
+            return View("Index", model);
         }
 
         // GET: Vehicles/Details/5

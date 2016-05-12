@@ -44,7 +44,7 @@ namespace Garage2.Controllers
 
         public ActionResult Search()
         {
-            return View();
+            return View(db.Vehicles.ToList());
         }
 
         // POST: Vehicles/Create

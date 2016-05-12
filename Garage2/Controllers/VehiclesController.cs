@@ -42,18 +42,29 @@ namespace Garage2.Controllers
             return View();
         }
 
-        public ActionResult Search(string Owner, string LicenseNr, VehcileType? TypeOfVehicle)
+        public ActionResult Search(string Owner, string LicenseNr, string Length, string Weight)
         {
+            float fLength = -1;
+            float fWeight = -1;
+
+            try
+            {
+                fLength = float.Parse(Length);
+            }
+            catch (Exception) { }
+
+            try
+            {
+                fWeight = float.Parse(Weight);
+            }
+            catch (Exception) { }
+
             var result = db.Vehicles
                 .Where(v => string.IsNullOrEmpty(Owner) || v.Owner == Owner)
                 .Where(v => string.IsNullOrEmpty(LicenseNr) || v.LicenseNr == LicenseNr)
+                .Where(v => fLength == -1 || v.Length == fLength)
+                .Where(v => fWeight == -1 || v.Weight == fWeight)
                 .ToList();
-
-            if (TypeOfVehicle != null)
-            {
-                result = result.Where(v => v.TypeOfVehicle == TypeOfVehicle
-                || TypeOfVehicle == VehcileType.None).ToList();
-            }
 
             return View(result);
         }

@@ -136,6 +136,7 @@ namespace Garage2.Controllers
                 && vehicle.TypeOfVehicle != VehcileType.None)
             {
                 vehicle.TimeParked = DateTime.Now;
+                vehicle.Parked = true;
                 db.Vehicles.Add(vehicle);
                 db.SaveChanges();
                 return RedirectToAction("Index");

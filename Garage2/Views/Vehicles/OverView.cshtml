@@ -1,6 +1,12 @@
 ﻿@model IEnumerable<Garage2.Models.Vehicle>
 
 @{
+	var includePrevious = Request.Params["listPreviousCars"];
+	if (includePrevious == null)
+	{ includePrevious = bool.FalseString; }
+}
+
+@{
     ViewBag.Title = "OverView";
 }
 
@@ -9,6 +15,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
 <table class="table">
     <tr>
         <th>
@@ -83,3 +90,10 @@
 }
 
 </table>
+
+@{
+	string linkText = (includePrevious == bool.TrueString ? "Exclude previously parked vehicles" : "Include previously parked vehicles");
+	string param = (includePrevious == bool.TrueString ? bool.FalseString : bool.TrueString);
+
+	<h6>Html.ActionLink(linkText: linkText, actionName: "PreviousCars", controllerName: "Vehicles", routeValues: new { listPreviousCars = param }, htmlAttributes: null);</h6>
+}

@@ -34,10 +34,10 @@ namespace Garage2.Controllers
                 case "owner":
                     model.Sort((item1, item2) => item1.Owner.CompareTo(item2.Owner));
                     break;
-                case "Licensenr":
+                case "licensenr":
                     model.Sort((item1, item2) => item1.LicenseNr.CompareTo(item2.LicenseNr));
                     break;
-                case "TypeOfVehicle":
+                case "typeofvehicle":
                     model.Sort((item1, item2) => item1.TypeOfVehicle.CompareTo(item2.TypeOfVehicle));
                     break;
                 case "length":
@@ -58,8 +58,22 @@ namespace Garage2.Controllers
 
             return View("OverView", model);
         }
-    
-        
+
+        public ActionResult PreviousCars(string listPreviousCars)
+        {
+            bool includePrevious = false;
+            try
+            {
+                includePrevious = Convert.ToBoolean(listPreviousCars);
+            }
+            catch (Exception)
+            {
+                includePrevious = false;
+            }
+            List<Vehicle> model = db.Vehicles.Where(item => item.Parked == includePrevious).ToList();
+            return View("OverView", model);
+        }
+
         // GET: Vehicles/Details/5
         public ActionResult Details(int? id)
         {
@@ -86,11 +100,10 @@ namespace Garage2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,Parked")] Vehicle vehicle)
+        public ActionResult Create([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,TimeParked,Parked")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
-                vehicle.TimeParked = DateTime.Now;
                 db.Vehicles.Add(vehicle);
                 db.SaveChanges();
                 return RedirectToAction("Index");

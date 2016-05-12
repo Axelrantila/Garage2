@@ -52,7 +52,7 @@ namespace Garage2.Controllers
             if (ModelState.IsValid)
             {
                 vehicle.TimeParked = DateTime.Now;
-                db.Employees.Add(vehicle);
+                db.Vehicles.Add(vehicle);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

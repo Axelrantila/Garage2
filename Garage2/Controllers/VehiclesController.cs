@@ -65,7 +65,8 @@ namespace Garage2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,TimeParked,Parked")] Vehicle vehicle)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid
+                && vehicle.TypeOfVehicle != VehcileType.None)
             {
                 db.Vehicles.Add(vehicle);
                 db.SaveChanges();

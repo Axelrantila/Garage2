@@ -58,7 +58,7 @@ namespace Garage2.Controllers
 
             return View("OverView", model);
         }
-
+    
         public ActionResult PreviousCars(string listPreviousCars)
         {
             bool includePrevious = false;
@@ -73,7 +73,7 @@ namespace Garage2.Controllers
             List<Vehicle> model = db.Vehicles.Where(item => item.Parked == includePrevious).ToList();
             return View("OverView", model);
         }
-
+        
         // GET: Vehicles/Details/5
         public ActionResult Details(int? id)
         {
@@ -144,11 +144,13 @@ namespace Garage2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,TimeParked,Parked")] Vehicle vehicle)
+        public ActionResult Create([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,Parked")] Vehicle vehicle)
         {
             if (ModelState.IsValid
                 && vehicle.TypeOfVehicle != VehcileType.None)
             {
+                vehicle.TimeParked = DateTime.Now; //A Comment
+
                 db.Vehicles.Add(vehicle);
                 db.SaveChanges();
                 return RedirectToAction("Index");

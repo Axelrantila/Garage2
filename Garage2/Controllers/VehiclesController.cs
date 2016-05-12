@@ -18,9 +18,48 @@ namespace Garage2.Controllers
         // GET: Vehicles
         public ActionResult Index()
         {
-            return View(db.Vehicles.ToList());
+            return View("OverView", db.Vehicles.ToList());
         }
 
+        public ActionResult SortBy(string sortby)
+        {
+            if (sortby == string.Empty)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            
+            List<Vehicle> model = db.Vehicles.ToList();
+            switch (sortby.ToLower())
+            {
+                case "owner":
+                    model.Sort((item1, item2) => item1.Owner.CompareTo(item2.Owner));
+                    break;
+                case "Licensenr":
+                    model.Sort((item1, item2) => item1.LicenseNr.CompareTo(item2.LicenseNr));
+                    break;
+                case "TypeOfVehicle":
+                    model.Sort((item1, item2) => item1.TypeOfVehicle.CompareTo(item2.TypeOfVehicle));
+                    break;
+                case "length":
+                    model.Sort((item1, item2) => item1.Length.CompareTo(item2.Length));
+                    break;
+                case "weight":
+                    model.Sort((item1, item2) => item1.Weight.CompareTo(item2.Weight));
+                    break;
+                case "timeparked":
+                    model.Sort((item1, item2) => item1.TimeParked.CompareTo(item2.TimeParked));
+                    break;
+                case "parked":
+                    model.Sort((item1, item2) => item1.Parked.CompareTo(item2.Parked));
+                    break;
+                default:
+                    break;
+            }
+
+            return View("OverView", model);
+        }
+    
+        
         // GET: Vehicles/Details/5
         public ActionResult Details(int? id)
         {

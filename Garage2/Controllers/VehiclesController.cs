@@ -47,10 +47,11 @@ namespace Garage2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,TimeParked,Parked")] Vehicle vehicle)
+        public ActionResult Create([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,Parked")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
+                vehicle.TimeParked = DateTime.Now;
                 db.Employees.Add(vehicle);
                 db.SaveChanges();
                 return RedirectToAction("Index");

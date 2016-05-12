@@ -135,7 +135,8 @@ namespace Garage2.Controllers
             if (ModelState.IsValid
                 && vehicle.TypeOfVehicle != VehcileType.None)
             {
-                vehicle.TimeParked = DateTime.Now;
+                vehicle.TimeParked = DateTime.Now; //A Comment
+
                 db.Vehicles.Add(vehicle);
                 db.SaveChanges();
                 return RedirectToAction("Index");

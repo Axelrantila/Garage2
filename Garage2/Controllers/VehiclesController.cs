@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -187,15 +188,29 @@ namespace Garage2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,TimeParked,Parked")] Vehicle vehicle)
+        public ActionResult Edit([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,Parked")] Vehicle chgVehicle)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(vehicle).State = EntityState.Modified;
+                Vehicle oldVehicle = db.Vehicles.Find( chgVehicle.Id );
+                var entry = db.Entry( oldVehicle );
+                entry.State = EntityState.Detached;
+
+                entry = db.Entry( chgVehicle );
+                entry.State = EntityState.Modified;
+
+                if ( chgVehicle.Parked && !oldVehicle.Parked )
+                    chgVehicle.TimeParked = DateTime.Now;
+                else
+                    entry.Property( "TimeParked" ).IsModified = false;
+
                 db.SaveChanges();
+
+                if ( !chgVehicle.Parked && oldVehicle.Parked )
+                    return RedirectToAction( "Receipt", new { id = chgVehicle.Id } );
                 return RedirectToAction("Index");
             }
-            return View(vehicle);
+            return View(chgVehicle);
         }
 
         // GET: Vehicles/Delete/5

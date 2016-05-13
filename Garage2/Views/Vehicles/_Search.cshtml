@@ -1,22 +1,57 @@
 ﻿@model IEnumerable<Garage2.Models.Vehicle>
 
-<form method="get" id="searchParams">
-    Owner
-    <input type="search" name="Owner" /><br />
+@using (Html.BeginForm("Search", "Vehicles", FormMethod.Get))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-md-2">Owner of the vehicle</label>
+            <div class="col-md-10">
+                <input type="search" name="Owner" />
+            </div>
+        </div>
 
-    LicenseNr
-    <input type="search" name="LicenseNr" /><br />
-    Length
-    <input type="search" name="Length" /><br />
-    Weight
-    <input type="search" name="Weight" /><br />
-    @Html.EnumDropDownListFor(model => model.First().TypeOfVehicle)<br />
+        <div class="form-group">
+            <label class="control-label col-md-2">License Number</label>
+            <div class="col-md-10">
+                <input type="search" name="LicenseNr" />
+            </div>
+        </div>
 
-    Any
-    <input type="checkbox" name="Any" value="Any" /><br />
+        <div class="form-group">
+            <label class="control-label col-md-2">Length(m)</label>
+            <div class="col-md-10">
+                <input type="search" name="Length" />
+            </div>
+        </div>
 
-    <input type="submit" value="Search"/>
-</form>
+        <div class="form-group">
+            <label class="control-label col-md-2">Weight(kg)</label>
+            <div class="col-md-10">
+                <input type="search" name="Weight" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Vehicle type</label>
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.First().TypeOfVehicle)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Any</label>
+            <div class="col-md-10">
+                <input type="checkbox" name="Any" value="Any" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Search" />
+            </div>
+        </div>
+    </div>
+}
 
 <table class="table">
     <tr>

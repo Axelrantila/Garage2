@@ -112,10 +112,11 @@ namespace Garage2.Controllers
             return View();
         }
 
-        public ActionResult Search(string Owner, string LicenseNr, string Length, string Weight)
+        public ActionResult Search(string Owner, string LicenseNr, string Length, string Weight, string TypeOfVehicle)
         {
             float fLength = -1;
             float fWeight = -1;
+            VehicleType vType = VehicleType.None;
 
             try
             {
@@ -129,11 +130,18 @@ namespace Garage2.Controllers
             }
             catch (Exception) { }
 
+            try
+            {
+                vType = (VehicleType)int.Parse(TypeOfVehicle);
+            }
+            catch (Exception) { }
+
             var result = db.Vehicles
                 .Where(v => string.IsNullOrEmpty(Owner) || v.Owner == Owner)
                 .Where(v => string.IsNullOrEmpty(LicenseNr) || v.LicenseNr == LicenseNr)
                 .Where(v => fLength == -1 || v.Length == fLength)
                 .Where(v => fWeight == -1 || v.Weight == fWeight)
+                .Where(v => vType == VehicleType.None || v.TypeOfVehicle == vType)
                 .ToList();
 
             return View(result);
@@ -147,7 +155,7 @@ namespace Garage2.Controllers
         public ActionResult Create([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,Parked")] Vehicle vehicle)
         {
             if (ModelState.IsValid
-                && vehicle.TypeOfVehicle != VehcileType.None)
+                && vehicle.TypeOfVehicle != VehicleType.None)
             {
                 vehicle.TimeParked = DateTime.Now; //A Comment
 

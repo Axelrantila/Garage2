@@ -10,7 +10,10 @@
     <input type="search" name="Length" /><br />
     Weight
     <input type="search" name="Weight" /><br />
-    @Html.EnumDropDownListFor(model => model.First().TypeOfVehicle)
+    @Html.EnumDropDownListFor(model => model.First().TypeOfVehicle)<br />
+
+    Any
+    <input type="checkbox" name="Any" value="Any" /><br />
 
     <input type="submit" value="Search"/>
 </form>

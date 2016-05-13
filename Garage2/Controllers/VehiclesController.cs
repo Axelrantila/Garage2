@@ -28,7 +28,7 @@ namespace Garage2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
+
             List<Vehicle> model = db.Vehicles.ToList();
             switch (sortby.ToLower())
             {
@@ -59,7 +59,7 @@ namespace Garage2.Controllers
 
             return View("OverView", model);
         }
-    
+
         public ActionResult PreviousCars(string listPreviousCars)
         {
             bool includePrevious = false;
@@ -74,7 +74,7 @@ namespace Garage2.Controllers
             List<Vehicle> model = db.Vehicles.Where(item => item.Parked == includePrevious).ToList();
             return View("OverView", model);
         }
-        
+
         // GET: Vehicles/Details/5
         public ActionResult Details(int? id)
         {
@@ -91,19 +91,22 @@ namespace Garage2.Controllers
         }
 
         // GET: Vehicles/Receipt/5
-        public ActionResult Receipt( int? id ) {
-            if ( id == null ) {
-                return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
+        public ActionResult Receipt(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vehicle vehicle = db.Vehicles.Find( id );
-            if ( vehicle == null ) {
+            Vehicle vehicle = db.Vehicles.Find(id);
+            if (vehicle == null)
+            {
                 return HttpNotFound();
             }
 
             ViewBag.ParkingPeriod = DateTime.Now - vehicle.TimeParked;
-            ViewBag.Cost = ((int)((ViewBag.ParkingPeriod - new TimeSpan( 0, 1, 0 )).TotalHours) + 1) * 60;
+            ViewBag.Cost = ((int)((ViewBag.ParkingPeriod - new TimeSpan(0, 1, 0)).TotalHours) + 1) * 60;
 
-            return View( vehicle );
+            return View(vehicle);
         }
 
 
@@ -113,7 +116,7 @@ namespace Garage2.Controllers
             return View();
         }
 
-        public ActionResult Search(string Owner, string LicenseNr, string Length, string Weight, string TypeOfVehicle)
+        public ActionResult Search(string Owner, string LicenseNr, string Length, string Weight, string TypeOfVehicle, string Any)
         {
             float fLength = -1;
             float fWeight = -1;
@@ -137,13 +140,30 @@ namespace Garage2.Controllers
             }
             catch (Exception) { }
 
-            var result = db.Vehicles
+            var result = db.Vehicles.ToList();
+            if (string.IsNullOrEmpty(Any))
+            {
+                result = result
                 .Where(v => string.IsNullOrEmpty(Owner) || v.Owner == Owner)
                 .Where(v => string.IsNullOrEmpty(LicenseNr) || v.LicenseNr == LicenseNr)
                 .Where(v => fLength == -1 || v.Length == fLength)
                 .Where(v => fWeight == -1 || v.Weight == fWeight)
                 .Where(v => vType == VehicleType.None || v.TypeOfVehicle == vType)
                 .ToList();
+            }
+            else
+            {
+                result = result
+                .Where(v => v.Owner == Owner
+                || v.LicenseNr == LicenseNr
+                || v.Length == fLength
+                || v.Weight == fWeight
+                || vType == VehicleType.None
+                || v.TypeOfVehicle == vType)
+                .ToList();
+            }
+
+
 
             return View(result);
         }

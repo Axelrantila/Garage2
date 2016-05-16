@@ -109,7 +109,7 @@ namespace Garage2.Controllers
             return View(vehicle);
         }
 
-        public ActionResult Search(string Owner, string LicenseNr, string Length, string Weight, string TypeOfVehicle, string Any)
+        public ActionResult Search(string Owner, string LicenseNr, string Length, string Weight, string TypeOfVehicle, string Any, string Parked)
         {
             float fLength = -1;
             float fWeight = -1;

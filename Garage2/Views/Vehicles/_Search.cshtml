@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Garage2.Models.Vehicle>
 
+<h2>Search for vehicles</h2>
+
 @using ( Ajax.BeginForm( new AjaxOptions { HttpMethod = "get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "vehicleTable" } ) ) { 
     <div class="form-horizontal">
         <div class="form-group">
@@ -33,14 +35,17 @@
         <div class="form-group">
             <label class="control-label col-md-2">Vehicle type</label>
             <div class="col-md-10">
-                @Html.EnumDropDownListFor( model => model.First().TypeOfVehicle )
+                @Html.EnumDropDownListFor( model => model.First().TypeOfVehicle )<br />
+                <i>Select none for any kind of vehicle</i>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2">Any</label>
+            <label class="control-label col-md-2">Any Parameter</label>
+
             <div class="col-md-10">
-                <input type="checkbox" name="Any" value="Any" />
+                <input type="checkbox" name="Any" value="Any"/><br />
+                <i>If uncheck, all conditions has to be met</i>
             </div>
         </div>
 

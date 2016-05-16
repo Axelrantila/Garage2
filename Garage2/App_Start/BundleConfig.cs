@@ -10,7 +10,8 @@ namespace Garage2
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery.unobtrusive*" ) );
+                        "~/Scripts/jquery.unobtrusive*",
+                        "~/Scripts/garage.js") );
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));

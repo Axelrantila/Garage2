@@ -254,6 +254,26 @@ namespace Garage2.Controllers
             return View(chgVehicle);
         }
 
+        public ActionResult TogglePark( int? id )
+        {
+            if ( id == null ) {
+                return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
+            }
+
+            Vehicle vehicle = db.Vehicles.Find( id );
+            bool wasParked = vehicle.Parked;
+
+            vehicle.Parked = !wasParked;
+            if ( !wasParked )
+                vehicle.TimeParked = DateTime.Now;
+
+            db.SaveChanges();
+
+            if ( wasParked )
+                return Content( "/Vehicles/Receipt/" + id );
+            return PartialView( "_ParkedTableData", vehicle );
+        }
+
         // GET: Vehicles/Delete/5
         public ActionResult Delete(int? id)
         {

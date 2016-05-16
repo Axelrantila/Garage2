@@ -200,6 +200,7 @@ namespace Garage2.Controllers
                 && vehicle.TypeOfVehicle != VehicleType.None)
             {
                 vehicle.TimeParked = DateTime.Now; //A Comment
+                vehicle.Parked = true;             //A Nother Comment
 
                 db.Vehicles.Add(vehicle);
                 db.SaveChanges();

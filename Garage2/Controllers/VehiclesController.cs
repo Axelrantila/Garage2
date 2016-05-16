@@ -20,18 +20,23 @@ namespace Garage2.Controllers
         public ActionResult Index()
         {
             //return View("Index", db.Vehicles.ToList());
-            return RedirectToAction("PreviousVehicles", new { listPreviousVehicles = bool.FalseString });
+            return RedirectToAction("OldVehicles", new { filterOld = bool.TrueString });
 
         }
 
-    public ActionResult SortBy(string sortby)
+    public ActionResult SortBy(string sortby, string filterOld)
         {
             if (sortby == string.Empty)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
-            List<Vehicle> model = db.Vehicles.ToList();
+            if (string.IsNullOrEmpty(filterOld))
+            {
+                filterOld = bool.TrueString;
+            }
+
+            //List<Vehicle> model = db.Vehicles.ToList();
+            List<Vehicle> model = FilterOldVehicles(filterOld);
             switch (sortby.ToLower())
             {
                 case "owner":
@@ -62,27 +67,31 @@ namespace Garage2.Controllers
             return View("Index", model);
         }
     
-        public ActionResult PreviousVehicles(string listPreviousVehicles)
+        public ActionResult OldVehicles(string filterOld)
         {
-            bool includePrevious = false;
-            List<Vehicle> model;
+            return View("Index", FilterOldVehicles(filterOld));
+        }
+
+        private List<Vehicle> FilterOldVehicles(string filterOld)
+        {
+            List<Vehicle> model = db.Vehicles.ToList();
+            //model = db.Vehicles.Where(item => item.Parked == true).ToList();
+            bool excludeOld = true;
+
             try
             {
-                includePrevious = Convert.ToBoolean(listPreviousVehicles);
+                excludeOld = Convert.ToBoolean(filterOld);
             }
             catch (Exception)
             {
-                includePrevious = false;
             }
-            if (includePrevious)
+
+            if (excludeOld)
             {
-                model = db.Vehicles.ToList();
+                model.RemoveAll(vehicle => vehicle.Parked == false);
             }
-            else
-            {
-                model = db.Vehicles.Where(item => item.Parked == true).ToList();
-            }
-            return View("Index", model);
+
+            return model;
         }
         
         // GET: Vehicles/Details/5

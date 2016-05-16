@@ -1,49 +1,56 @@
 ﻿@model IEnumerable<Garage2.Models.Vehicle>
 
 @{
-	var includePrevious = Request.Params["listPreviousVehicles"];
-	if (includePrevious == null)
-	{ includePrevious = bool.FalseString; }
-}
+	var filterOld = Request.Params["filterOld"];
+	if (filterOld == null) { filterOld = bool.TrueString; }
 
-@{
+	var sortByParam = Request.Params["sortBy"];
+	if (sortByParam == null) { sortByParam = "TimeParked"; }
+
+	string linkText = (filterOld == bool.TrueString ? "Include no longer parked vehicles" : "Exclude no longer parked vehicles");
+	string filterParam = (filterOld == bool.TrueString ? bool.FalseString : bool.TrueString);
+	
 	ViewBag.Title = "Parked Vehicles";
 }
 
 <h2>Parked Vehicles</h2>
 
-<p>
+@*<p>
 	@Html.ActionLink("Create New", "Create")
-</p>
+</p>*@
 
 <table class="table">
 	<tr>
 		<th>
-			@Html.ActionLink(linkText: "Owner", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Owner" }, htmlAttributes: null)
+			@Html.ActionLink(linkText: "Owner", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Owner", filterOld = filterOld }, htmlAttributes: null)
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "LicenseNr", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "LicenseNr" }, htmlAttributes: null)
+			@Html.ActionLink(linkText: "LicenseNr", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "LicenseNr", filterOld = filterOld }, htmlAttributes: null)
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "TypeOfVehicle", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TypeOfVehicle" }, htmlAttributes: null)
+			@Html.ActionLink(linkText: "TypeOfVehicle", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TypeOfVehicle", filterOld = filterOld }, htmlAttributes: null)
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "Length", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Length" }, htmlAttributes: null)
+			@Html.ActionLink(linkText: "Length", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Length", filterOld = filterOld }, htmlAttributes: null)
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "Weight", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Weight" }, htmlAttributes: null)
+			@Html.ActionLink(linkText: "Weight", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Weight", filterOld = filterOld }, htmlAttributes: null)
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "TimeParked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TimeParked" }, htmlAttributes: null)
+			@{
+				if (sortByParam == "TimeParked"){ Html.Raw("<b>"); }
+				Html.ActionLink(linkText: "TimeParked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TimeParked", filterOld = filterOld }, htmlAttributes: null);
+				if (sortByParam == "TimeParked"){ Html.Raw("</b>"); }
+			}
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "Parked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Parked" }, htmlAttributes: null)
+			@Html.ActionLink(linkText: "Parked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Parked", includePrevious = filterOld }, htmlAttributes: null)
 		</th>
 
 		<th></th>
@@ -52,9 +59,7 @@
 
 	@foreach (var item in Model)
 	{
-
 		<tr>
-
 			<td>
 				@Html.DisplayFor(modelItem => item.Owner)
 			</td>
@@ -92,9 +97,6 @@
 
 </table>
 
-@{
-	string linkText = (includePrevious == bool.TrueString ? "Exclude previously parked vehicles" : "Include previously parked vehicles");
-	string param = (includePrevious == bool.TrueString ? bool.FalseString : bool.TrueString);
-}
-<h6>@Html.ActionLink(linkText: linkText, actionName: "PreviousVehicles", controllerName: "Vehicles", routeValues: new { listPreviousVehicles = param }, htmlAttributes: null)</h6>
+
+<h6>@Html.ActionLink(linkText: linkText, actionName: "OldVehicles", controllerName: "Vehicles", routeValues: new { sortBy = sortByParam, filterOld = filterParam }, htmlAttributes: null)</h6>
 

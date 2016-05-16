@@ -161,7 +161,7 @@ namespace Garage2.Controllers
             if ( Request.IsAjaxRequest() ) {
                 return PartialView( "_VehicleTable", result );
             }
-            return View("_Search", result);
+            return View(result);
         }
 
         // GET: Vehicles/Create

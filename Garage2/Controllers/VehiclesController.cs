@@ -19,10 +19,12 @@ namespace Garage2.Controllers
         // GET: Vehicles
         public ActionResult Index()
         {
-            return View("Index", db.Vehicles.ToList());
+            //return View("Index", db.Vehicles.ToList());
+            return RedirectToAction("PreviousVehicles", new { listPreviousVehicles = bool.FalseString });
+
         }
 
-        public ActionResult SortBy(string sortby)
+    public ActionResult SortBy(string sortby)
         {
             if (sortby == string.Empty)
             {

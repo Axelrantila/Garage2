@@ -109,13 +109,6 @@ namespace Garage2.Controllers
             return View(vehicle);
         }
 
-
-        // GET: Vehicles/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
         public ActionResult Search(string Owner, string LicenseNr, string Length, string Weight, string TypeOfVehicle, string Any)
         {
             float fLength = -1;
@@ -163,9 +156,16 @@ namespace Garage2.Controllers
                 .ToList();
             }
 
+            if ( Request.IsAjaxRequest() ) {
+                return PartialView( "_VehicleTable", result );
+            }
+            return View("_Search", result);
+        }
 
-
-            return View(result);
+        // GET: Vehicles/Create
+        public ActionResult Create()
+        {
+            return View();
         }
 
         // POST: Vehicles/Create

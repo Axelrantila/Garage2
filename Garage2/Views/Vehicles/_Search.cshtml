@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<Garage2.Models.Vehicle>
 
-@using (Html.BeginForm("Search", "Vehicles", FormMethod.Get))
-{
+@using ( Ajax.BeginForm( new AjaxOptions { HttpMethod = "get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "vehicleTable" } ) ) { 
     <div class="form-horizontal">
         <div class="form-group">
             <label class="control-label col-md-2">Owner of the vehicle</label>
@@ -34,7 +33,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Vehicle type</label>
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.First().TypeOfVehicle)
+                @Html.EnumDropDownListFor( model => model.First().TypeOfVehicle )
             </div>
         </div>
 
@@ -53,62 +52,6 @@
     </div>
 }
 
-<table class="table">
-    <tr>
-        <th>
-            <label>Owner</label>
-        </th>   
-        <th>
-            <label>License Number</label>
-        </th>
-        <th>
-            <label>Type of Vehicle</label>
-        </th>
-        <th>
-            <label>Length(m)</label>
-        </th>
-        <th>
-            <label>Weight(kg)</label>
-        </th>
-        <th>
-            <label>Parking date</label>
-        </th>
-        <th>
-            <label>Currently parked</label>
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Owner)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LicenseNr)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeOfVehicle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Length)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Weight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeParked)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Parked)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
-
-</table>
+<div id="vehicleTable">
+    @Html.Partial( "_VehicleTable", Model )
+</div>

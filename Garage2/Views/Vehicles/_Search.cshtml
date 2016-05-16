@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Garage2.Models.Vehicle>
 
+<h2>Search for vehicles</h2>
+
 @using ( Ajax.BeginForm( new AjaxOptions { HttpMethod = "get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "vehicleTable" } ) ) { 
     <div class="form-horizontal">
         <div class="form-group">

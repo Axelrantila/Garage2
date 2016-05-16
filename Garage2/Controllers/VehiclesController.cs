@@ -141,7 +141,7 @@ namespace Garage2.Controllers
             }
             catch (Exception) { }
 
-            var result = db.Vehicles.ToList();
+                var result = db.Vehicles.ToList();
             if (string.IsNullOrEmpty(Any))
             {
                 result = result
@@ -150,7 +150,7 @@ namespace Garage2.Controllers
                 .Where(v => fLength == -1 || v.Length == fLength)
                 .Where(v => fWeight == -1 || v.Weight == fWeight)
                 .Where(v => vType == VehicleType.None || v.TypeOfVehicle == vType)
-                .Where(v => v.Parked == bParked)
+                .Where(v => v.Parked == bParked || string.IsNullOrEmpty(Parked))
                 .ToList();
             }
             else

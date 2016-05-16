@@ -15,6 +15,9 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+<p>
+    @Html.ActionLink("Advanced search", "Search")
+</p>
 
 <table class="table">
     <tr>
@@ -23,23 +26,23 @@
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "LicenseNr", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "LicenseNr" }, htmlAttributes: null)
+			@Html.ActionLink(linkText: "License Number", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "LicenseNr" }, htmlAttributes: null)
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "TypeOfVehicle", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TypeOfVehicle" }, htmlAttributes: null)
+			@Html.ActionLink(linkText: "Type Of Vehicle", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TypeOfVehicle" }, htmlAttributes: null)
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "Length", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Length" }, htmlAttributes: null)
+			@Html.ActionLink(linkText: "Length(m)", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Length" }, htmlAttributes: null)
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "Weight", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Weight" }, htmlAttributes: null)
+			@Html.ActionLink(linkText: "Weight(kg)", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Weight" }, htmlAttributes: null)
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "TimeParked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TimeParked" }, htmlAttributes: null)
+			@Html.ActionLink(linkText: "Time Parked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TimeParked" }, htmlAttributes: null)
 		</th>
 
 		<th>
@@ -97,3 +100,5 @@
 }
 	<h6>@Html.ActionLink(linkText: linkText, actionName: "PreviousCars", controllerName: "Vehicles", routeValues: new { listPreviousCars = param }, htmlAttributes: null)</h6>
 
+	<h6>Html.ActionLink(linkText: linkText, actionName: "PreviousCars", controllerName: "Vehicles", routeValues: new { listPreviousCars = param }, htmlAttributes: null);</h6>
+}

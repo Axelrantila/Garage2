@@ -1,79 +1,64 @@
 ﻿@model IEnumerable<Garage2.Models.Vehicle>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<form method="get" id="searchParams">
-    Owner
-    <input type="search" name="Owner" /><br />
+@using ( Ajax.BeginForm( new AjaxOptions { HttpMethod = "get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "vehicleTable" } ) ) { 
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-md-2">Owner of the vehicle</label>
+            <div class="col-md-10">
+                <input type="search" name="Owner" />
+            </div>
+        </div>
 
-    LicenseNr
-    <input type="search" name="LicenseNr" /><br />
-    Length
-    <input type="search" name="Length" /><br />
+        <div class="form-group">
+            <label class="control-label col-md-2">License Number</label>
+            <div class="col-md-10">
+                <input type="search" name="LicenseNr" />
+            </div>
+        </div>
 
-    Weight
-    <input type="search" name="Weight" /><br />
+        <div class="form-group">
+            <label class="control-label col-md-2">Length(m)</label>
+            <div class="col-md-10">
+                <input type="search" name="Length" />
+            </div>
+        </div>
 
-    <input type="submit" value="Search"/>
-</form>
+        <div class="form-group">
+            <label class="control-label col-md-2">Weight(kg)</label>
+            <div class="col-md-10">
+                <input type="search" name="Weight" />
+            </div>
+        </div>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Owner)
-        </th>   
-        <th>
-            @Html.DisplayNameFor(model => model.LicenseNr)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TypeOfVehicle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Length)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Weight)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TimeParked)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Parked)
-        </th>
-        <th></th>
-    </tr>
+        <div class="form-group">
+            <label class="control-label col-md-2">Vehicle type</label>
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor( model => model.First().TypeOfVehicle )
+            </div>
+        </div>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Owner)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LicenseNr)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeOfVehicle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Length)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Weight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeParked)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Parked)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
+        <div class="form-group">
+            <label class="control-label col-md-2">Any</label>
+            <div class="col-md-10">
+                <input type="checkbox" name="Any" value="Any" />
+            </div>
+        </div>
 
-</table>
+        <div class="form-group">
+            <label class="control-label col-md-2">Currently parked</label>
+            <div class="col-md-10">
+                <input type="checkbox" name="Parked" value="Parked" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Search" />
+            </div>
+        </div>
+    </div>
+}
+
+<div id="vehicleTable">
+    @Html.Partial( "_VehicleTable", Model )
+</div>

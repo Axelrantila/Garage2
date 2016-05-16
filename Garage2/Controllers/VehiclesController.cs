@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -58,7 +59,7 @@ namespace Garage2.Controllers
 
             return View("Index", model);
         }
-
+    
         public ActionResult PreviousVehicles(string listPreviousVehicles)
         {
             bool includePrevious = false;
@@ -81,7 +82,7 @@ namespace Garage2.Controllers
             }
             return View("Index", model);
         }
-
+        
         // GET: Vehicles/Details/5
         public ActionResult Details(int? id)
         {
@@ -98,32 +99,30 @@ namespace Garage2.Controllers
         }
 
         // GET: Vehicles/Receipt/5
-        public ActionResult Receipt( int? id ) {
-            if ( id == null ) {
-                return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
+        public ActionResult Receipt(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vehicle vehicle = db.Vehicles.Find( id );
-            if ( vehicle == null ) {
+            Vehicle vehicle = db.Vehicles.Find(id);
+            if (vehicle == null)
+            {
                 return HttpNotFound();
             }
 
             ViewBag.ParkingPeriod = DateTime.Now - vehicle.TimeParked;
-            ViewBag.Cost = ((int)((ViewBag.ParkingPeriod - new TimeSpan( 0, 1, 0 )).TotalHours) + 1) * 60;
+            ViewBag.Cost = ((int)((ViewBag.ParkingPeriod - new TimeSpan(0, 1, 0)).TotalHours) + 1) * 60;
 
-            return View( vehicle );
+            return View(vehicle);
         }
 
-
-        // GET: Vehicles/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        public ActionResult Search(string Owner, string LicenseNr, string Length, string Weight)
+        public ActionResult Search(string Owner, string LicenseNr, string Length, string Weight, string TypeOfVehicle, string Any, string Parked)
         {
             float fLength = -1;
             float fWeight = -1;
+            VehicleType vType = VehicleType.None;
+            bool bParked = !string.IsNullOrEmpty(Parked);
 
             try
             {
@@ -137,14 +136,46 @@ namespace Garage2.Controllers
             }
             catch (Exception) { }
 
-            var result = db.Vehicles
+            try
+            {
+                vType = (VehicleType)int.Parse(TypeOfVehicle);
+            }
+            catch (Exception) { }
+
+                var result = db.Vehicles.ToList();
+            if (string.IsNullOrEmpty(Any))
+            {
+                result = result
                 .Where(v => string.IsNullOrEmpty(Owner) || v.Owner == Owner)
                 .Where(v => string.IsNullOrEmpty(LicenseNr) || v.LicenseNr == LicenseNr)
                 .Where(v => fLength == -1 || v.Length == fLength)
                 .Where(v => fWeight == -1 || v.Weight == fWeight)
+                .Where(v => vType == VehicleType.None || v.TypeOfVehicle == vType)
+                .Where(v => v.Parked == bParked || string.IsNullOrEmpty(Parked))
                 .ToList();
+            }
+            else
+            {
+                result = result
+                .Where(v => v.Owner == Owner
+                || v.LicenseNr == LicenseNr
+                || v.Length == fLength
+                || v.Weight == fWeight
+                || vType == VehicleType.None
+                || v.TypeOfVehicle == vType)
+                .ToList();
+            }
 
-            return View(result);
+            if ( Request.IsAjaxRequest() ) {
+                return PartialView( "_VehicleTable", result );
+        }
+            return View("_Search", result);
+        }
+
+        // GET: Vehicles/Create
+        public ActionResult Create()
+        {
+            return View();
         }
 
         // POST: Vehicles/Create
@@ -155,7 +186,7 @@ namespace Garage2.Controllers
         public ActionResult Create([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,Parked")] Vehicle vehicle)
         {
             if (ModelState.IsValid
-                && vehicle.TypeOfVehicle != VehcileType.None)
+                && vehicle.TypeOfVehicle != VehicleType.None)
             {
                 vehicle.TimeParked = DateTime.Now; //A Comment
 
@@ -187,15 +218,29 @@ namespace Garage2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,TimeParked,Parked")] Vehicle vehicle)
+        public ActionResult Edit([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,Parked")] Vehicle chgVehicle)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(vehicle).State = EntityState.Modified;
+                Vehicle oldVehicle = db.Vehicles.Find( chgVehicle.Id );
+                var entry = db.Entry( oldVehicle );
+                entry.State = EntityState.Detached;
+
+                entry = db.Entry( chgVehicle );
+                entry.State = EntityState.Modified;
+
+                if ( chgVehicle.Parked && !oldVehicle.Parked )
+                    chgVehicle.TimeParked = DateTime.Now;
+                else
+                    entry.Property( "TimeParked" ).IsModified = false;
+
                 db.SaveChanges();
+
+                if ( !chgVehicle.Parked && oldVehicle.Parked )
+                    return RedirectToAction( "Receipt", new { id = chgVehicle.Id } );
                 return RedirectToAction("Index");
             }
-            return View(vehicle);
+            return View(chgVehicle);
         }
 
         // GET: Vehicles/Delete/5

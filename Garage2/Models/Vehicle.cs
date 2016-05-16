@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Garage2.Models
 {
-    public enum VehcileType
+    public enum VehicleType
     {
         None,
         Car,
@@ -20,7 +20,7 @@ namespace Garage2.Models
         public int Id { get; set; }
         public string Owner { get; set; }
         public string LicenseNr { get; set; }
-        public VehcileType TypeOfVehicle { get; set; }
+        public VehicleType TypeOfVehicle { get; set; }
         public float Length { get; set; }
         public float Weight { get; set; }
         public DateTime TimeParked { get; set; }

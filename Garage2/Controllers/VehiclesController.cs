@@ -114,6 +114,7 @@ namespace Garage2.Controllers
             float fLength = -1;
             float fWeight = -1;
             VehicleType vType = VehicleType.None;
+            bool bParked = !string.IsNullOrEmpty(Parked);
 
             try
             {
@@ -133,7 +134,7 @@ namespace Garage2.Controllers
             }
             catch (Exception) { }
 
-            var result = db.Vehicles.ToList();
+                var result = db.Vehicles.ToList();
             if (string.IsNullOrEmpty(Any))
             {
                 result = result
@@ -142,6 +143,7 @@ namespace Garage2.Controllers
                 .Where(v => fLength == -1 || v.Length == fLength)
                 .Where(v => fWeight == -1 || v.Weight == fWeight)
                 .Where(v => vType == VehicleType.None || v.TypeOfVehicle == vType)
+                .Where(v => v.Parked == bParked || string.IsNullOrEmpty(Parked))
                 .ToList();
             }
             else

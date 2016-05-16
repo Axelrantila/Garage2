@@ -19,7 +19,7 @@ namespace Garage2.Controllers
         // GET: Vehicles
         public ActionResult Index()
         {
-            return View("OverView", db.Vehicles.ToList());
+            return View("Index", db.Vehicles.ToList());
         }
 
         public ActionResult SortBy(string sortby)
@@ -28,7 +28,7 @@ namespace Garage2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
+            
             List<Vehicle> model = db.Vehicles.ToList();
             switch (sortby.ToLower())
             {
@@ -57,24 +57,32 @@ namespace Garage2.Controllers
                     break;
             }
 
-            return View("OverView", model);
+            return View("Index", model);
         }
-
-        public ActionResult PreviousCars(string listPreviousCars)
+    
+        public ActionResult PreviousVehicles(string listPreviousVehicles)
         {
             bool includePrevious = false;
+            List<Vehicle> model;
             try
             {
-                includePrevious = Convert.ToBoolean(listPreviousCars);
+                includePrevious = Convert.ToBoolean(listPreviousVehicles);
             }
             catch (Exception)
             {
                 includePrevious = false;
             }
-            List<Vehicle> model = db.Vehicles.Where(item => item.Parked == includePrevious).ToList();
-            return View("OverView", model);
+            if (includePrevious)
+            {
+                model = db.Vehicles.ToList();
+            }
+            else
+            {
+                model = db.Vehicles.Where(item => item.Parked == true).ToList();
+            }
+            return View("Index", model);
         }
-
+        
         // GET: Vehicles/Details/5
         public ActionResult Details(int? id)
         {
@@ -160,8 +168,8 @@ namespace Garage2.Controllers
 
             if ( Request.IsAjaxRequest() ) {
                 return PartialView( "_VehicleTable", result );
-            }
-            return View(result);
+        }
+            return View("_Search", result);
         }
 
         // GET: Vehicles/Create

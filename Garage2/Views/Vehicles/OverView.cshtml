@@ -7,7 +7,7 @@
 }
 
 @{
-    ViewBag.Title = "OverView";
+    ViewBag.Title = "OverView1";
 }
 
 <h2>OverView</h2>
@@ -97,6 +97,8 @@
 @{
 	string linkText = (includePrevious == bool.TrueString ? "Exclude previously parked vehicles" : "Include previously parked vehicles");
 	string param = (includePrevious == bool.TrueString ? bool.FalseString : bool.TrueString);
+}
+	<h6>@Html.ActionLink(linkText: linkText, actionName: "PreviousCars", controllerName: "Vehicles", routeValues: new { listPreviousCars = param }, htmlAttributes: null)</h6>
 
-	<h6>@Html.ActionLink(linkText: linkText, actionName: "PreviousCars", controllerName: "Vehicles", routeValues: new { listPreviousCars = param }, htmlAttributes: null);</h6>
+	<h6>Html.ActionLink(linkText: linkText, actionName: "PreviousCars", controllerName: "Vehicles", routeValues: new { listPreviousCars = param }, htmlAttributes: null);</h6>
 }

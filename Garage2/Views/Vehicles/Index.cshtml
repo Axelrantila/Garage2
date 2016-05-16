@@ -1,69 +1,100 @@
 ﻿@model IEnumerable<Garage2.Models.Vehicle>
 
 @{
-    ViewBag.Title = "Index";
+	var includePrevious = Request.Params["listPreviousVehicles"];
+	if (includePrevious == null)
+	{ includePrevious = bool.FalseString; }
 }
 
-<h2>Index</h2>
+@{
+	ViewBag.Title = "OverView";
+}
+
+<h2>OverView</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+	@Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Owner)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LicenseNr)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TypeOfVehicle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Length)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Weight)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TimeParked)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Parked)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Owner)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LicenseNr)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TypeOfVehicle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Length)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Weight)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TimeParked)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Parked)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+<table class="table">
+	<tr>
+		<th>
+			@Html.ActionLink(linkText: "Owner", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Owner" }, htmlAttributes: null)
+		</th>
+
+		<th>
+			@Html.ActionLink(linkText: "LicenseNr", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "LicenseNr" }, htmlAttributes: null)
+		</th>
+
+		<th>
+			@Html.ActionLink(linkText: "TypeOfVehicle", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TypeOfVehicle" }, htmlAttributes: null)
+		</th>
+
+		<th>
+			@Html.ActionLink(linkText: "Length", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Length" }, htmlAttributes: null)
+		</th>
+
+		<th>
+			@Html.ActionLink(linkText: "Weight", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Weight" }, htmlAttributes: null)
+		</th>
+
+		<th>
+			@Html.ActionLink(linkText: "TimeParked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TimeParked" }, htmlAttributes: null)
+		</th>
+
+		<th>
+			@Html.ActionLink(linkText: "Parked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Parked" }, htmlAttributes: null)
+		</th>
+
+		<th></th>
+
+	</tr>
+
+	@foreach (var item in Model)
+	{
+
+		<tr>
+
+			<td>
+				@Html.DisplayFor(modelItem => item.Owner)
+			</td>
+
+			<td>
+				@Html.DisplayFor(modelItem => item.LicenseNr)
+			</td>
+
+			<td>
+				@Html.DisplayFor(modelItem => item.TypeOfVehicle)
+			</td>
+
+			<td>
+				@Html.DisplayFor(modelItem => item.Length)
+			</td>
+
+			<td>
+				@Html.DisplayFor(modelItem => item.Weight)
+			</td>
+
+			<td>
+				@Html.DisplayFor(modelItem => item.TimeParked)
+			</td>
+
+			<td>
+				@Html.DisplayFor(modelItem => item.Parked)
+			</td>
+			@*<td>
+					@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+					@Html.ActionLink("Details", "Details", new { id=item.Id }) |
+					@Html.ActionLink("Delete", "Delete", new { id=item.Id })
+				</td>*@
+		</tr>
+	}
 
 </table>
+
+@{
+	string linkText = (includePrevious == bool.TrueString ? "Exclude previously parked vehicles" : "Include previously parked vehicles");
+	string param = (includePrevious == bool.TrueString ? bool.FalseString : bool.TrueString);
+}
+<h6>@Html.ActionLink(linkText: linkText, actionName: "PreviousVehicles", controllerName: "Vehicles", routeValues: new { listPreviousVehicles = param }, htmlAttributes: null)</h6>
+

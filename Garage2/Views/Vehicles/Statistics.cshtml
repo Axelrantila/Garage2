@@ -38,11 +38,14 @@
 
     foreach (var item in Model)
     {
-        if (!OwnerTable.ContainsKey(item.Owner))
+        if (item.Parked)
         {
-            OwnerTable.Add(item.Owner, 0);
+            if (!OwnerTable.ContainsKey(item.Owner))
+            {
+                OwnerTable.Add(item.Owner, 0);
+            }
+            OwnerTable[item.Owner] += (item.HoursParked() * 60);
         }
-        OwnerTable[item.Owner] += (item.HoursParked() * 60);
     }
 
     var ownerWithMostDebt = OwnerTable.OrderByDescending(r => r.Value).First();

@@ -9,7 +9,9 @@
 
 	string linkText = (filterOld == bool.TrueString ? "Include no longer parked vehicles" : "Exclude no longer parked vehicles");
 	string filterParam = (filterOld == bool.TrueString ? bool.FalseString : bool.TrueString);
-	
+
+	var sortedColumnHeader = new { @class = "sortedHeader" };
+
 	ViewBag.Title = "Parked Vehicles";
 }
 
@@ -22,37 +24,36 @@
 <table class="table">
 	<tr>
 		<th>
-			@Html.ActionLink(linkText: "Owner", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Owner", filterOld = filterOld }, htmlAttributes: null)
+			@Html.ActionLink(linkText: "Owner", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Owner", filterOld = filterOld }, htmlAttributes: (sortByParam == "Owner" ? sortedColumnHeader : null))
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "LicenseNr", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "LicenseNr", filterOld = filterOld }, htmlAttributes: null)
+			@Html.ActionLink(linkText: "LicenseNr", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "LicenseNr", filterOld = filterOld }, htmlAttributes: (sortByParam == "LicenseNr" ? sortedColumnHeader : null))
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "TypeOfVehicle", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TypeOfVehicle", filterOld = filterOld }, htmlAttributes: null)
+			@Html.ActionLink(linkText: "TypeOfVehicle", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TypeOfVehicle", filterOld = filterOld }, htmlAttributes: (sortByParam == "TypeOfVehicle" ? sortedColumnHeader : null))
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "Length", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Length", filterOld = filterOld }, htmlAttributes: null)
+			@Html.ActionLink(linkText: "Length", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Length", filterOld = filterOld }, htmlAttributes: (sortByParam == "Length" ? sortedColumnHeader : null))
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "Weight", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Weight", filterOld = filterOld }, htmlAttributes: null)
+			@Html.ActionLink(linkText: "Weight", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Weight", filterOld = filterOld }, htmlAttributes: (sortByParam == "Weight" ? sortedColumnHeader : null))
 		</th>
 
 		<th>
-			@{
-				if (sortByParam == "TimeParked"){ Html.Raw("<b>"); }
-				Html.ActionLink(linkText: "TimeParked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TimeParked", filterOld = filterOld }, htmlAttributes: null);
-				if (sortByParam == "TimeParked"){ Html.Raw("</b>"); }
+			@Html.ActionLink(linkText: "TimeParked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TimeParked", filterOld = filterOld }, htmlAttributes: (sortByParam == "TimeParked" ? sortedColumnHeader : null))
+		</th>
+		@{
+			if (filterOld == bool.FalseString)
+			{
+				<th>
+					@Html.ActionLink(linkText: "Parked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Parked", filterOld = filterOld }, htmlAttributes: (sortByParam == "Parked" ? sortedColumnHeader : null))
+				</th>
 			}
-		</th>
-
-		<th>
-			@Html.ActionLink(linkText: "Parked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Parked", includePrevious = filterOld }, htmlAttributes: null)
-		</th>
-
+		}
 		<th></th>
 
 	</tr>
@@ -83,10 +84,14 @@
 			<td>
 				@Html.DisplayFor(modelItem => item.TimeParked)
 			</td>
-
-			<td>
-				@Html.DisplayFor(modelItem => item.Parked)
-			</td>
+			@{
+				if (filterOld == bool.FalseString)
+				{
+					<td>
+						@Html.DisplayFor(modelItem => item.Parked)
+					</td>
+				}
+			}
 			@*<td>
 					@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
 					@Html.ActionLink("Details", "Details", new { id=item.Id }) |

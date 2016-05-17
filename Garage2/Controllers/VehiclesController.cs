@@ -168,6 +168,11 @@ namespace Garage2.Controllers
             return View( "_Search", result );
         }
 
+        public ActionResult Statistics()
+        {
+            return View(db.Vehicles.ToList());
+        }
+
         // GET: Vehicles/Create
         public ActionResult Create()
         {

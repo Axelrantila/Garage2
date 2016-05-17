@@ -26,5 +26,10 @@ namespace Garage2.Models
         public DateTime TimeParked { get; set; }
         public bool Parked { get; set; }
         public int ParkingLot { get; set; }
+
+        public int HoursParked()
+        {
+            return (int)((DateTime.Now - TimeParked).TotalHours + 1);
+        }
     }
 }

@@ -195,6 +195,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Garage2.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -263,6 +264,7 @@
     <Content Include="Views\Vehicles\_VehicleTable.cshtml" />
     <Content Include="Views\Vehicles\_ParkedTableData.cshtml" />
     <Content Include="Views\Vehicles\_Create.cshtml" />
+    <Content Include="Views\Vehicles\Statistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

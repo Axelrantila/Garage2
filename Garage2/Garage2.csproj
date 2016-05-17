@@ -179,8 +179,13 @@
     <Compile Include="Migrations\201605120900360_Initial.Designer.cs">
       <DependentUpon>201605120900360_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605171129590_ParkingLotProperty.cs" />
+    <Compile Include="Migrations\201605171129590_ParkingLotProperty.Designer.cs">
+      <DependentUpon>201605171129590_ParkingLotProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Garage.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Vehicle.cs" />
@@ -275,6 +280,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201605120900360_Initial.resx">
       <DependentUpon>201605120900360_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605171129590_ParkingLotProperty.resx">
+      <DependentUpon>201605171129590_ParkingLotProperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -4,10 +4,8 @@
     ViewBag.Title = "Statistics";
 }
 
-<h2>Statistics</h2>
-
- <!--Vehicle Count-->
-<h3>Count</h3>
+<!--Vehicle Count-->
+<h3>Vehicle Count</h3>
 <b>Cars: </b> @Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.Car).Count()<br />
 <b>SUVs: </b> @Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.SUV).Count()<br />
 <b>Motorcycles: </b> @Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.Motorcycle).Count()<br />
@@ -25,3 +23,32 @@
 <p>
     The total parking price is @Model.Where(v => v.Parked == true).Sum(v => v.HoursParked() * 60) SEK
 </p>
+
+<h3>Trivia: </h3>
+<b>Number of wheels in the garage:</b> @Math.Max(0,
+    Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.Car).Where(v => v.Parked == true).Count() * 4 +
+    Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.SUV).Where(v => v.Parked == true).Count() * 4 +
+    Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.Motorcycle).Where(v => v.Parked == true).Count() * 2 +
+    Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.CarTrailer).Where(v => v.Parked == true).Count() * (4 + 2) +
+    Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.Truck).Where(v => v.Parked == true).Count() * 6)<br />
+
+@{
+    Dictionary<string, int> OwnerTable = new Dictionary<string, int>();
+
+    foreach (var item in Model)
+    {
+        if (item.Parked)
+        {
+            if (!OwnerTable.ContainsKey(item.Owner))
+            {
+                OwnerTable.Add(item.Owner, 0);
+            }
+            OwnerTable[item.Owner] += (item.HoursParked() * 60);
+        }
+    }
+
+    var ownerWithMostDebt = OwnerTable.OrderByDescending(r => r.Value).First();
+
+    @: <span><b>@ownerWithMostDebt.Key</b> has to pay the most pay at @ownerWithMostDebt.Value SEK</span><br />
+    <b>Average time parked: </b> @Model.Where(v => v.Parked).Average(v => v.HoursParked()) @:hours (Averaging @Model.Where(v => v.Parked).Average(v => v.HoursParked() * 60) SEK parking fees)
+}

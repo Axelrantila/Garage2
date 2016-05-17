@@ -25,6 +25,7 @@ namespace Garage2.Models
         public float Weight { get; set; }
         public DateTime TimeParked { get; set; }
         public bool Parked { get; set; }
+        public int ParkingLot { get; set; }
 
         public int HoursParked()
         {

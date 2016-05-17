@@ -7,8 +7,12 @@
     $.ajax(options).done(function (data) {
         var cbIx = data.lastIndexOf("<td");
         if (cbIx > 0) {
-            $('#timeParkedTableData' + modelId).replaceWith(data.substring(0, cbIx));
-            $($form.attr("id")).replaceWith(data.substring(cbIx));
+            var tpSubData = data.substring(0, cbIx),
+                pSubData = data.substring(cbIx);
+
+            $('#timeParkedTableData' + modelId).replaceWith(tpSubData);
+            $('#parkToggleForm' + modelId).replaceWith(pSubData);
+            //$($form.attr("id")).replaceWith(pSubData);
         }
         else
             window.location = data;

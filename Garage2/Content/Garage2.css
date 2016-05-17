@@ -1,4 +1,28 @@
-﻿.sortedHeader
+﻿.ColHeaderSorted
 {
     font-style: italic;
+    /*text-decoration: underline;*/
+    color: black;
+}
+
+.ColHeader
+{
+    /*text-decoration: underline;*/
+}
+
+a:hover.ColHeader
+{
+    font-style: italic;
+}
+
+a.ColHeader,
+a:visited.ColHeader,
+a:hover.ColHeader,
+a:active.ColHeader,
+a.ColHeaderSorted,
+a:visited.ColHeaderSorted,
+a:hover.ColHeaderSorted,
+a:active.ColHeaderSorted
+{
+    color: black;
 }

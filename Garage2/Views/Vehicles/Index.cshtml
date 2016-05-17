@@ -2,15 +2,16 @@
 
 @{
 	var filterOld = Request.Params["filterOld"];
-    if ( filterOld == null ) { filterOld = bool.TrueString; }
+	if ( filterOld == null ) { filterOld = bool.TrueString; }
 
 	var sortByParam = Request.Params["sortBy"];
-    if ( sortByParam == null ) { sortByParam = "TimeParked"; }
+	if ( sortByParam == null ) { sortByParam = "TimeParked"; }
 
 	string linkText = (filterOld == bool.TrueString ? "Include no longer parked vehicles" : "Exclude no longer parked vehicles");
 	string filterParam = (filterOld == bool.TrueString ? bool.FalseString : bool.TrueString);
-	
-	var sortedColumnHeader = new { @class = "sortedHeader" };
+
+	var sortedColumnHeader = new { @class = "ColHeaderSorted" };
+	var columnHeader = new { @class = "ColHeader" };
 
 	ViewBag.Title = "Parked Vehicles";
 }
@@ -24,33 +25,33 @@
 <table class="table">
 	<tr>
 		<th>
-			@Html.ActionLink(linkText: "Owner", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Owner", filterOld = filterOld }, htmlAttributes: (sortByParam == "Owner" ? sortedColumnHeader : null))
+			@Html.ActionLink(linkText: "Owner", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Owner", filterOld = filterOld }, htmlAttributes: (sortByParam == "Owner" ? sortedColumnHeader : columnHeader))
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "LicenseNr", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "LicenseNr", filterOld = filterOld }, htmlAttributes: (sortByParam == "LicenseNr" ? sortedColumnHeader : null))
+			@Html.ActionLink(linkText: "LicenseNr", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "LicenseNr", filterOld = filterOld }, htmlAttributes: (sortByParam == "LicenseNr" ? sortedColumnHeader : columnHeader))
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "TypeOfVehicle", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TypeOfVehicle", filterOld = filterOld }, htmlAttributes: (sortByParam == "TypeOfVehicle" ? sortedColumnHeader : null))
+			@Html.ActionLink(linkText: "TypeOfVehicle", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TypeOfVehicle", filterOld = filterOld }, htmlAttributes: (sortByParam == "TypeOfVehicle" ? sortedColumnHeader : columnHeader))
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "Length", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Length", filterOld = filterOld }, htmlAttributes: (sortByParam == "Length" ? sortedColumnHeader : null))
+			@Html.ActionLink(linkText: "Length", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Length", filterOld = filterOld }, htmlAttributes: (sortByParam == "Length" ? sortedColumnHeader : columnHeader))
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "Weight", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Weight", filterOld = filterOld }, htmlAttributes: (sortByParam == "Weight" ? sortedColumnHeader : null))
+			@Html.ActionLink(linkText: "Weight", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Weight", filterOld = filterOld }, htmlAttributes: (sortByParam == "Weight" ? sortedColumnHeader : columnHeader))
 		</th>
 
 		<th>
-			@Html.ActionLink(linkText: "TimeParked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TimeParked", filterOld = filterOld }, htmlAttributes: (sortByParam == "TimeParked" ? sortedColumnHeader : null))
+			@Html.ActionLink(linkText: "TimeParked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TimeParked", filterOld = filterOld }, htmlAttributes: (sortByParam == "TimeParked" ? sortedColumnHeader : columnHeader))
 		</th>
 		@{
 			if (filterOld == bool.FalseString)
 			{
 		<th>
-					@Html.ActionLink(linkText: "Parked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Parked", filterOld = filterOld }, htmlAttributes: (sortByParam == "Parked" ? sortedColumnHeader : null))
+					@Html.ActionLink(linkText: "Parked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Parked", filterOld = filterOld }, htmlAttributes: (sortByParam == "Parked" ? sortedColumnHeader : columnHeader))
 		</th>
 			}
 		}

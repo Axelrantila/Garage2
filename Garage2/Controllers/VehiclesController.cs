@@ -190,7 +190,7 @@ namespace Garage2.Controllers
 
                 vehicle.TimeParked = DateTime.Now;
                 vehicle.Parked = false;
-                ViewBag.UserFailMessage = ParkVehicle( vehicle );
+                ViewBag.UserFailMessage = Garage.ParkVehicle( vehicle, db);
 
                 db.Vehicles.Add( vehicle );
                 db.SaveChanges();
@@ -229,7 +229,7 @@ namespace Garage2.Controllers
                 entry.State = EntityState.Modified;
 
                 if ( chgVehicle.Parked && !oldVehicle.Parked )
-                    ViewBag.UserFailMessage = ParkVehicle( chgVehicle );
+                    ViewBag.UserFailMessage = Garage.ParkVehicle( chgVehicle, db);
                 else
                     entry.Property( "TimeParked" ).IsModified = false;
 
@@ -252,7 +252,7 @@ namespace Garage2.Controllers
             bool wasParked = vehicle.Parked;
 
             if (!vehicle.Parked) {
-                ViewBag.UserFailMessage = ParkVehicle( vehicle );
+                ViewBag.UserFailMessage = Garage.ParkVehicle( vehicle, db);
             }
             else {
                 vehicle.Parked = false;
@@ -287,84 +287,6 @@ namespace Garage2.Controllers
             db.Vehicles.Remove( vehicle );
             db.SaveChanges();
             return RedirectToAction( "Index" );
-        }
-
-        /// <summary>
-        /// Parks a vehicle in the garage, returns an error message if failing, otherwise null.
-        /// </summary>
-        /// <param name="vehicle"></param>
-        /// <returns>Returns an error message if failing, otherwise null.</returns>
-        protected string ParkVehicle( Vehicle vehicle )
-        {
-            var parkedVehicles = db.Vehicles.Where( v => v.Parked ).OrderBy( v => v.ParkingLot ).ToList();
-
-            int lot = TryParkSmallVehicle( vehicle, parkedVehicles );
-
-            if ( lot < 0 )
-                lot = TryParkVehicle( vehicle, parkedVehicles );
-
-            if ( lot < 0 ) {
-                vehicle.Parked = false;
-                return "No space for the vehicle in the garage";
-            }
-
-            vehicle.Parked = true;
-            vehicle.ParkingLot = lot;
-            vehicle.TimeParked = DateTime.Now;
-
-            return null;
-        }
-
-        private int NrOfIntLotsNeeded( Vehicle vehicle ) {
-            return (int)Math.Ceiling( Garage.NrOfLotsRequired[vehicle.TypeOfVehicle] - 0.00001f);
-        }
-
-        private int TryParkVehicle( Vehicle vehicle, List<Vehicle> parkedVehicles ) {
-            int nrLotsNeeded = NrOfIntLotsNeeded( vehicle );
-
-            int candidateLot = Garage.MinLotNr;
-            for ( int i = 0; i < parkedVehicles.Count; i++ ) {
-                if ( parkedVehicles[i].ParkingLot > candidateLot ) {
-                    int freeLots = parkedVehicles[i].ParkingLot - candidateLot;
-                    if ( freeLots >= nrLotsNeeded && Garage.IsAdjacent( candidateLot, (int)nrLotsNeeded ) ) {
-                        return candidateLot;
-                    }
-                }
-                candidateLot = parkedVehicles[i].ParkingLot + NrOfIntLotsNeeded( parkedVehicles[i] );
-            }
-
-            do {
-                if ( Garage.IsAdjacent( candidateLot, (int)nrLotsNeeded ) )
-                    return candidateLot;
-                candidateLot++;
-            } while ( candidateLot <= Garage.MaxLotNr );
-
-            return int.MinValue;
-        }
-
-        private int TryParkSmallVehicle( Vehicle vehicle, List<Vehicle> parkedVehicles )
-        {
-            int candidateLot = int.MinValue;
-
-            float nrLotsNeeded = Garage.NrOfLotsRequired[vehicle.TypeOfVehicle];
-            if ( nrLotsNeeded >= 1 )
-                return candidateLot;
-
-            for ( int i = 0; i < parkedVehicles.Count; i++ ) {
-
-                if ( Garage.NrOfLotsRequired[parkedVehicles[i].TypeOfVehicle] <= 0.99f ) {
-                    float freeSpace = (float)1;
-                    for ( int j = i; j < parkedVehicles.Count && parkedVehicles[j].ParkingLot == parkedVehicles[i].ParkingLot; j++ )
-                        freeSpace -= Garage.NrOfLotsRequired[parkedVehicles[j].TypeOfVehicle];
-
-                    if ( nrLotsNeeded <= freeSpace + 0.00001 ) {
-                        candidateLot = parkedVehicles[i].ParkingLot;
-                        break;
-                    }
-                }
-            }
-
-            return candidateLot;
         }
 
         protected override void Dispose(bool disposing)

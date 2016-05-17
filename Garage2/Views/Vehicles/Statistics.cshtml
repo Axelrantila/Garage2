@@ -31,3 +31,21 @@
     Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.Motorcycle).Where(v => v.Parked == true).Count() * 2 +
     Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.CarTrailer).Where(v => v.Parked == true).Count() * (4 + 2) +
     Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.Truck).Where(v => v.Parked == true).Count() * 6)
+
+<h3>Owner with most debt</h3>
+@{ 
+    Dictionary<string, int> OwnerTable = new Dictionary<string, int>();
+
+    foreach (var item in Model)
+    {
+        if (!OwnerTable.ContainsKey(item.Owner))
+        {
+            OwnerTable.Add(item.Owner, 0);
+        }
+        OwnerTable[item.Owner] += (item.HoursParked() * 60);
+    }
+
+    var ownerWithMostDebt = OwnerTable.OrderByDescending(r => r.Value).First();
+
+    @: <span>@ownerWithMostDebt.Key has to pay the most pay at @ownerWithMostDebt.Value SEK</span>
+}

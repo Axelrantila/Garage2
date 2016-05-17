@@ -13,7 +13,15 @@
 <b>Motorcycles: </b> @Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.Motorcycle).Count()<br />
 <b>CarTrailers: </b> @Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.CarTrailer).Count()<br />
 <b>Trucks: </b> @Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.Truck).Count()<br />
-@if(Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.None).Count() > 0)
+@if (Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.None).Count() > 0)
 {
     @:There should not be any vehicles with the type <b>None</b> but apparently there are<br />
 }
+
+<h3>Total time parked</h3>
+<p>
+    @Model.Where(v => v.Parked == true).Sum(v => v.HoursParked()) Hours
+</p>
+<p>
+    The total parking price is @Model.Where(v => v.Parked == true).Sum(v => v.HoursParked() * 60) SEK
+</p>

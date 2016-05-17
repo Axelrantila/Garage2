@@ -3,6 +3,9 @@
 <table class="table">
     <tr>
         <th>
+            <label>Parking lot</label>
+        </th>
+        <th>
             <label>Owner</label>
         </th>
         <th>
@@ -28,6 +31,9 @@
 
     @foreach ( var item in Model ) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParkingLot)
+            </td>
             <td>
                 @Html.DisplayFor( modelItem => item.Owner )
             </td>

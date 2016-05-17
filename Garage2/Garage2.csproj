@@ -259,6 +259,7 @@
     <Content Include="Views\Vehicles\_VehicleTable.cshtml" />
     <Content Include="Views\Vehicles\_ParkedTableData.cshtml" />
     <Content Include="Views\Vehicles\_Create.cshtml" />
+    <Content Include="Views\Vehicles\Statistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

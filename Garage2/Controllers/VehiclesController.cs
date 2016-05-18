@@ -17,14 +17,14 @@ namespace Garage2.Controllers
         private VehicleContext db = new VehicleContext();
 
         // GET: Vehicles
-        public ActionResult Index()
+        public ActionResult Index( string userMessage )
         {
             //return View("Index", db.Vehicles.ToList());
-            return RedirectToAction( "OldVehicles", new { filterOld = bool.TrueString } );
+            return RedirectToAction( "OldVehicles", new { filterOld = bool.TrueString, userMessage = userMessage } );
 
         }
 
-        public ActionResult SortBy( string sortby, string filterOld )
+        public ActionResult SortBy( string sortby, string filterOld, string userMessage )
         {
             if ( sortby == string.Empty ) {
                 return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
@@ -32,9 +32,11 @@ namespace Garage2.Controllers
             if ( string.IsNullOrEmpty( filterOld ) ) {
                 filterOld = bool.TrueString;
             }
+            if ( !String.IsNullOrWhiteSpace( userMessage ) )
+                ViewBag.UserFailMessage = userMessage;
 
             //List<Vehicle> model = db.Vehicles.ToList();
-            List<Vehicle> model = FilterOldVehicles( filterOld );
+            List<Vehicle> model = FilterOldVehicles( filterOld, userMessage );
             switch ( sortby.ToLower() ) {
                 case "parkinglot":
                     model.Sort((item1, item2) => item1.ParkingLot.CompareTo(item2.ParkingLot));
@@ -67,13 +69,19 @@ namespace Garage2.Controllers
             return View( "Index", model );
         }
 
-        public ActionResult OldVehicles( string filterOld )
+        public ActionResult OldVehicles( string filterOld, string userMessage )
         {
-            return View( "Index", FilterOldVehicles( filterOld ) );
+            if ( !String.IsNullOrWhiteSpace( userMessage ) )
+                ViewBag.UserFailMessage = userMessage;
+
+            return View( "Index", FilterOldVehicles( filterOld, userMessage ) );
         }
 
-        private List<Vehicle> FilterOldVehicles( string filterOld )
+        private List<Vehicle> FilterOldVehicles( string filterOld, string userMessage )
         {
+            if ( !String.IsNullOrWhiteSpace( userMessage ) )
+                ViewBag.UserFailMessage = userMessage;
+
             List<Vehicle> model = db.Vehicles.ToList();
             //model = db.Vehicles.Where(item => item.Parked == true).ToList();
             bool excludeOld = true;
@@ -92,8 +100,11 @@ namespace Garage2.Controllers
         }
 
         // GET: Vehicles/Details/5
-        public ActionResult Details( int? id )
+        public ActionResult Details( int? id, string userMessage )
         {
+            if ( !String.IsNullOrWhiteSpace( userMessage ) )
+                ViewBag.UserFailMessage = userMessage;
+
             if ( id == null ) {
                 return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
             }
@@ -105,8 +116,11 @@ namespace Garage2.Controllers
         }
 
         // GET: Vehicles/Receipt/5
-        public ActionResult Receipt( int? id )
+        public ActionResult Receipt( int? id, string userMessage )
         {
+            if ( !String.IsNullOrWhiteSpace( userMessage ) )
+                ViewBag.UserFailMessage = userMessage;
+
             if ( id == null ) {
                 return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
             }
@@ -121,8 +135,11 @@ namespace Garage2.Controllers
             return View( vehicle );
         }
 
-        public ActionResult Search( string Owner, string LicenseNr, string Length, string Weight, string MakeModel, string Color, string NumWheels, string TypeOfVehicle, string Any, string Parked )
+        public ActionResult Search( string Owner, string LicenseNr, string Length, string Weight, string MakeModel, string Color, string NumWheels, string TypeOfVehicle, string Any, string Parked, string userMessage )
         {
+            if ( !String.IsNullOrWhiteSpace( userMessage ) )
+                ViewBag.UserFailMessage = userMessage;
+
             float fLength = -1;
             float fWeight = -1;
             VehicleType vType = VehicleType.None;
@@ -184,14 +201,20 @@ namespace Garage2.Controllers
             return View( "_Search", result );
         }
 
-        public ActionResult Statistics()
+        public ActionResult Statistics( string userMessage )
         {
+            if ( !String.IsNullOrWhiteSpace( userMessage ) )
+                ViewBag.UserFailMessage = userMessage;
+
             return View(db.Vehicles.ToList());
         }
 
         // GET: Vehicles/Create
-        public ActionResult Create()
+        public ActionResult Create( string userMessage )
         {
+            if ( !String.IsNullOrWhiteSpace( userMessage ) )
+                ViewBag.UserFailMessage = userMessage;
+
             return View();
         }
 
@@ -200,9 +223,12 @@ namespace Garage2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( [Bind( Include = "Owner,LicenseNr,TypeOfVehicle,MakeAndModel,Color,Length,Weight,NrOfWheels" )] Vehicle vehicle )
+        public ActionResult Create( [Bind( Include = "Owner,LicenseNr,TypeOfVehicle,MakeAndModel,Color,Length,Weight,NrOfWheels" )] Vehicle vehicle, string userMessage )
         {
-            if (vehicle.TypeOfVehicle == VehicleType.None)
+            if ( !String.IsNullOrWhiteSpace( userMessage ) )
+                ViewBag.UserFailMessage = userMessage;
+
+            if ( vehicle.TypeOfVehicle == VehicleType.None)
             {
                 ViewBag.UserFailMessage = "You cannot select None as a vehicle type";
             }
@@ -218,11 +244,11 @@ namespace Garage2.Controllers
                 else {
                     vehicle.TimeParked = DateTime.Now;
                     vehicle.Parked = false;
-                    ViewBag.UserFailMessage = Garage.ParkVehicle( vehicle, db );
+                    ViewBag.UserFailMessage = ViewBag.FailedParkMessage = Garage.ParkVehicle( vehicle, db );
 
                     db.Vehicles.Add( vehicle );
                     db.SaveChanges();
-                    return RedirectToAction( "Index" );
+                    return RedirectToAction( "Index", new { userMessage = ViewBag.UserFailMessage } );
                 }
             }
 
@@ -247,8 +273,11 @@ namespace Garage2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( [Bind( Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,Parked" )] Vehicle chgVehicle )
+        public ActionResult Edit( [Bind( Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,Parked" )] Vehicle chgVehicle, string userMessage )
         {
+            if ( !String.IsNullOrWhiteSpace( userMessage ) )
+                ViewBag.UserFailMessage = userMessage;
+
             if ( ModelState.IsValid ) {
                 Vehicle oldVehicle = db.Vehicles.Find( chgVehicle.Id );
                 var entry = db.Entry( oldVehicle );
@@ -258,7 +287,7 @@ namespace Garage2.Controllers
                 entry.State = EntityState.Modified;
 
                 if ( chgVehicle.Parked && !oldVehicle.Parked )
-                    ViewBag.UserFailMessage = Garage.ParkVehicle( chgVehicle, db);
+                    ViewBag.UserFailMessage = ViewBag.FailedParkMessage = Garage.ParkVehicle( chgVehicle, db);
                 else
                     entry.Property( "TimeParked" ).IsModified = false;
 
@@ -271,8 +300,11 @@ namespace Garage2.Controllers
             return View( chgVehicle );
         }
 
-        public ActionResult TogglePark( int? id )
+        public ActionResult TogglePark( int? id, string userMessage )
         {
+            if ( !String.IsNullOrWhiteSpace( userMessage ) )
+                ViewBag.UserFailMessage = userMessage;
+
             if ( id == null ) {
                 return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
             }
@@ -281,7 +313,7 @@ namespace Garage2.Controllers
             bool wasParked = vehicle.Parked;
 
             if (!vehicle.Parked) {
-                ViewBag.UserFailMessage = Garage.ParkVehicle( vehicle, db);
+                ViewBag.UserFailMessage = ViewBag.FailedParkMessage = Garage.ParkVehicle( vehicle, db);
             }
             else {
                 vehicle.Parked = false;
@@ -295,8 +327,11 @@ namespace Garage2.Controllers
         }
 
         // GET: Vehicles/Delete/5
-        public ActionResult Delete( int? id )
+        public ActionResult Delete( int? id, string userMessage )
         {
+            if ( !String.IsNullOrWhiteSpace( userMessage ) )
+                ViewBag.UserFailMessage = userMessage;
+
             if ( id == null ) {
                 return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
             }
@@ -310,8 +345,11 @@ namespace Garage2.Controllers
         // POST: Vehicles/Delete/5
         [HttpPost, ActionName( "Delete" )]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed( int id )
+        public ActionResult DeleteConfirmed( int id, string userMessage )
         {
+            if ( !String.IsNullOrWhiteSpace( userMessage ) )
+                ViewBag.UserFailMessage = userMessage;
+
             Vehicle vehicle = db.Vehicles.Find( id );
             db.Vehicles.Remove( vehicle );
             db.SaveChanges();

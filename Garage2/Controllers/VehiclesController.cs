@@ -36,6 +36,9 @@ namespace Garage2.Controllers
             //List<Vehicle> model = db.Vehicles.ToList();
             List<Vehicle> model = FilterOldVehicles( filterOld );
             switch ( sortby.ToLower() ) {
+                case "parkinglot":
+                    model.Sort((item1, item2) => item1.ParkingLot.CompareTo(item2.ParkingLot));
+                    break;
                 case "owner":
                     model.Sort( ( item1, item2 ) => item1.Owner.CompareTo( item2.Owner ) );
                     break;

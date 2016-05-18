@@ -25,6 +25,9 @@
 <table class="table">
 	<tr>
 		<th>
+			@Html.ActionLink(linkText: "Parking lots", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "ParkingLots", filterOld = filterOld }, htmlAttributes: (sortByParam == "ParkingLots" ? sortedColumnHeader : columnHeader))
+		</th>
+		<th>
 			@Html.ActionLink(linkText: "Owner", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Owner", filterOld = filterOld }, htmlAttributes: (sortByParam == "Owner" ? sortedColumnHeader : columnHeader))
 		</th>
 
@@ -61,6 +64,10 @@
 
     @foreach ( var item in Model ) {
 		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.ParkingLot)
+			</td>
+
 			<td>
                 @Html.DisplayFor( modelItem => item.Owner )
 			</td>

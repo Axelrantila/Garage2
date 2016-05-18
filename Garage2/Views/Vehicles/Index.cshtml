@@ -31,9 +31,9 @@
 			@Html.ActionLink(linkText: "Owner", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Owner", filterOld = filterOld }, htmlAttributes: (sortByParam == "Owner" ? sortedColumnHeader : columnHeader))
 		</th>
 
-		@*<th>
+		<th>
 			@Html.ActionLink(linkText: "LicenseNr", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "LicenseNr", filterOld = filterOld }, htmlAttributes: (sortByParam == "LicenseNr" ? sortedColumnHeader : columnHeader))
-		</th>*@
+		</th>
 
 		<th>
 			@Html.ActionLink(linkText: "TypeOfVehicle", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TypeOfVehicle", filterOld = filterOld }, htmlAttributes: (sortByParam == "TypeOfVehicle" ? sortedColumnHeader : columnHeader))
@@ -72,9 +72,9 @@
                 @Html.DisplayFor( modelItem => item.Owner )
 			</td>
 
-			@*<td>
+			<td>
                 @Html.DisplayFor( modelItem => item.LicenseNr )
-			</td>*@
+			</td>
 
 			<td>
                 @Html.DisplayFor( modelItem => item.TypeOfVehicle )

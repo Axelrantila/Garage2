@@ -4,8 +4,6 @@
     ViewBag.Title = "Statistics";
 }
 
-<h3>Availible Parking Spaces</h3>
-
 <!--Vehicle Count-->
 <h3>Vehicle Count</h3>
 <b>Cars: </b> @Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.Car).Count()<br />

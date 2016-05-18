@@ -202,7 +202,13 @@ namespace Garage2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create( [Bind( Include = "Owner,LicenseNr,TypeOfVehicle,MakeAndModel,Color,Length,Weight,NrOfWheels" )] Vehicle vehicle )
         {
-            if ( ModelState.IsValid && vehicle.TypeOfVehicle != VehicleType.None ) {
+            if (vehicle.TypeOfVehicle == VehicleType.None)
+            {
+                ViewBag.UserFailMessage = "You cannot select None as a vehicle type";
+            }
+
+            else if ( ModelState.IsValid )
+            {
 
                 vehicle.LicenseNr = vehicle.LicenseNr.Trim().ToUpper();
 

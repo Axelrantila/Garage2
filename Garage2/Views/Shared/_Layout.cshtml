@@ -30,6 +30,18 @@
             </div>
         </div>
     </div>
+
+    <div id="UserFailMessage">
+        @if (!string.IsNullOrEmpty(ViewBag.UserFailMessage))
+        {
+            <div class="alert-warning">
+                <h3>
+                    @ViewBag.UserFailMessage
+                </h3>
+            </div>
+        }
+    </div>
+
     <div class="container body-content">
         @RenderBody()
         <hr />

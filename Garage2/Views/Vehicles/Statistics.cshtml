@@ -46,6 +46,6 @@
 
     var ownerWithMostDebt = OwnerTable.OrderByDescending(r => r.Value).First();
 
-    @: <span><b>@ownerWithMostDebt.Key</b> has to pay the most pay at @ownerWithMostDebt.Value SEK</span><br />
+    @: <span><b>@ownerWithMostDebt.Key</b> has to pay the most parking fees at @ownerWithMostDebt.Value SEK</span><br />
     <b>Average time parked: </b> @Model.Where(v => v.Parked).Average(v => v.HoursParked()) @:hours (Averaging @Model.Where(v => v.Parked).Average(v => v.HoursParked() * 60) SEK parking fees)
 }

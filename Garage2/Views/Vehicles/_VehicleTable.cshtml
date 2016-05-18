@@ -39,39 +39,7 @@
     </tr>
 
     @foreach ( var item in Model ) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParkingLot)
-            </td>
-            <td>
-                @Html.DisplayFor( modelItem => item.Owner )
-            </td>
-            <td>
-                @Html.DisplayFor( modelItem => item.LicenseNr )
-            </td>
-            <td>
-                @Html.DisplayFor( modelItem => item.TypeOfVehicle )
-            </td>
-            <td>
-                @Html.DisplayFor( modelItem => item.Length )
-            </td>
-            <td>
-                @Html.DisplayFor( modelItem => item.Weight )
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MakeAndModel)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Color)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.NrOfWheels)
-            </td>
-
-            @Html.Partial("_ParkedTableData", item)
-        </tr>
+        @Html.Partial( "_ParkedTableData", item )
     }
     </>
 

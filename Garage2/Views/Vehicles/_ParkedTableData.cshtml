@@ -1,11 +1,48 @@
 ﻿@model Garage2.Models.Vehicle
+@using Garage2.Models
 
-<td id="@String.Format("timeParkedTableData{0}",Model.Id)">
-    @(Model.Parked?Html.DisplayFor( modelItem => Model.TimeParked ):new MvcHtmlString(""))
-</td>
+<tr id=@String.Format("vehicleTableRow{0}",Model.Id)>
+    <td>
+        @(Model.Parked
+            ?
+            (Garage.NrOfLotsRequired[Model.TypeOfVehicle] > 1
+            ? String.Format("{0} - {1}", Model.ParkingLot, Model.ParkingLot + (int)Garage.NrOfLotsRequired[Model.TypeOfVehicle] - 1)
+            : Model.ParkingLot.ToString())
+           :
+           "")
+    </td>
+    <td>
+        @Html.DisplayFor( modelItem => Model.Owner )
+    </td>
+    <td>
+        @Html.DisplayFor( modelItem => Model.LicenseNr )
+    </td>
+    <td>
+        @Html.DisplayFor( modelItem => Model.TypeOfVehicle )
+    </td>
+    <td>
+        @Html.DisplayFor( modelItem => Model.Length )
+    </td>
+    <td>
+        @Html.DisplayFor( modelItem => Model.Weight )
+    </td>
+    <td>
+        @Html.DisplayFor( modelItem => Model.MakeAndModel )
+    </td>
 
-<td id="@String.Format("parkedTableData{0}",Model.Id)">
-    <form id="@String.Format("parkToggleForm{0}",Model.Id)" action="@Url.Action("/Edit/"+Model.Id)" method="post">
-        <input @(Model.Parked?"checked":"") class="check-box" type="checkbox" onclick="$(@Html.Raw(String.Format("'#parkToggleForm{0}'", Model.Id))).submit(togglePark(@Model.Id))" />
-    </form>
-</td>
+    <td>
+        @Html.DisplayFor( modelItem => Model.Color )
+    </td>
+
+    <td>
+        @Html.DisplayFor( modelItem => Model.NrOfWheels )
+    </td>
+
+    <td>
+        @(Model.Parked ? Html.DisplayFor( modelItem => Model.TimeParked ) : new MvcHtmlString( "" ))
+    </td>
+
+    <td>
+        <input @(Model.Parked ? "checked" : "") class="check-box" type="checkbox" onclick="togglePark(@Model.Id)" />
+    </td>
+</tr>

@@ -5,7 +5,6 @@
 }
 
 <h3>Availible Parking Spaces</h3>
-@Garage2.Models.Garage.AdjacentLotSequences
 
 <!--Vehicle Count-->
 <h3>Vehicle Count</h3>
@@ -16,7 +15,7 @@
 <b>Trucks: </b> @Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.Truck).Count()<br />
 @if (Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.None).Count() > 0)
 {
-    @:There should not be any vehicles with the type <b>None</b> but apparently there are<br />
+    @:There should not be any vehicles with the type <b>None</b> in the garage but apparently there are<br />
 }
 
 <h3>Total time parked</h3>

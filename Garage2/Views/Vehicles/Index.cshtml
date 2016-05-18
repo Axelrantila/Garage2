@@ -25,7 +25,7 @@
 <table class="table">
 	<tr>
 		<th>
-			@Html.ActionLink(linkText: "Parking lots", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "ParkingLots", filterOld = filterOld }, htmlAttributes: (sortByParam == "ParkingLots" ? sortedColumnHeader : columnHeader))
+			@Html.ActionLink(linkText: "Parking lots", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "ParkingLot", filterOld = filterOld }, htmlAttributes: (sortByParam == "ParkingLot" ? sortedColumnHeader : columnHeader))
 		</th>
 		<th>
 			@Html.ActionLink(linkText: "Owner", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Owner", filterOld = filterOld }, htmlAttributes: (sortByParam == "Owner" ? sortedColumnHeader : columnHeader))

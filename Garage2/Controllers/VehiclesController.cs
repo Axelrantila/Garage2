@@ -121,12 +121,13 @@ namespace Garage2.Controllers
             return View( vehicle );
         }
 
-        public ActionResult Search( string Owner, string LicenseNr, string Length, string Weight, string TypeOfVehicle, string Any, string Parked )
+        public ActionResult Search( string Owner, string LicenseNr, string Length, string Weight, string MakeModel, string Color, string NumWheels, string TypeOfVehicle, string Any, string Parked )
         {
             float fLength = -1;
             float fWeight = -1;
             VehicleType vType = VehicleType.None;
             bool bParked = !string.IsNullOrEmpty( Parked );
+            int iNumWheels = -1;
 
             try {
                 fLength = float.Parse( Length );
@@ -143,6 +144,12 @@ namespace Garage2.Controllers
             }
             catch ( Exception ) { }
 
+            try
+            {
+                iNumWheels = int.Parse(NumWheels);
+            }
+            catch (Exception) { }
+
             var result = db.Vehicles.ToList();
             if ( string.IsNullOrEmpty( Any ) ) {
                 result = result
@@ -152,6 +159,9 @@ namespace Garage2.Controllers
                 .Where( v => fWeight == -1 || v.Weight == fWeight )
                 .Where( v => vType == VehicleType.None || v.TypeOfVehicle == vType )
                 .Where( v => v.Parked == bParked || string.IsNullOrEmpty( Parked ) )
+                .Where(v => string.IsNullOrEmpty(Color) || v.Color == Color)
+                .Where(v => string.IsNullOrEmpty(MakeModel) || v.MakeAndModel.Contains(MakeModel))
+                .Where(v => iNumWheels == -1 || v.NrOfWheels == iNumWheels)
                 .ToList();
             }
             else {
@@ -160,8 +170,11 @@ namespace Garage2.Controllers
                  || v.LicenseNr == LicenseNr
                  || v.Length == fLength
                  || v.Weight == fWeight
+                 || v.MakeAndModel.Contains(MakeModel)
+                 || v.Color == Color
                  || vType == VehicleType.None
-                 || v.TypeOfVehicle == vType )
+                 || v.TypeOfVehicle == vType
+                 || v.NrOfWheels == iNumWheels)
                 .ToList();
             }
 

@@ -187,7 +187,7 @@ namespace Garage2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( [Bind( Include = "Id,Owner,LicenseNr,TypeOfVehicle,Length,Weight,Parked" )] Vehicle vehicle )
+        public ActionResult Create( [Bind( Include = "Owner,LicenseNr,TypeOfVehicle,MakeAndModel,Color,Length,Weight,NrOfWheels" )] Vehicle vehicle )
         {
             if ( ModelState.IsValid && vehicle.TypeOfVehicle != VehicleType.None ) {
 

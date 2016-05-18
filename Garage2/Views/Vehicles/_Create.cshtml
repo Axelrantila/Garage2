@@ -34,6 +34,22 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-md-2">Make and Model</label>
+            <div class="col-md-10">
+                @Html.EditorFor( model => model.MakeAndModel, new { htmlAttributes = new { @class = "form-control" } } )
+                @Html.ValidationMessageFor( model => model.MakeAndModel, "", new { @class = "text-danger" } )
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Color</label>
+            <div class="col-md-10">
+                @Html.EditorFor( model => model.Color, new { htmlAttributes = new { @class = "form-control" } } )
+                @Html.ValidationMessageFor( model => model.Color, "", new { @class = "text-danger" } )
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="control-label col-md-2">Length (meters)</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Length, new { htmlAttributes = new { @class = "form-control" } })
@@ -46,6 +62,14 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Number of Wheels</label>
+            <div class="col-md-10">
+                @Html.EditorFor( model => model.NrOfWheels, new { htmlAttributes = new { @class = "form-control" } } )
+                @Html.ValidationMessageFor( model => model.NrOfWheels, "", new { @class = "text-danger" } )
             </div>
         </div>
 		

@@ -21,8 +21,11 @@ namespace Garage2.Models
         public string Owner { get; set; }
         public string LicenseNr { get; set; }
         public VehicleType TypeOfVehicle { get; set; }
+        public string MakeAndModel { get; set; }
+        public string Color { get; set; }
         public float Length { get; set; }
         public float Weight { get; set; }
+        public int NrOfWheels { get; set; }
         public DateTime TimeParked { get; set; }
         public bool Parked { get; set; }
         public int ParkingLot { get; set; }

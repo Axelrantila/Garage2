@@ -121,18 +121,18 @@ namespace Garage2.Models
 
             for (int i = 0; i < parkedVehicles.Count; i++)
             {
-
                 if (Garage.NrOfLotsRequired[parkedVehicles[i].TypeOfVehicle] <= 0.99f)
                 {
                     float freeSpace = (float)1;
-                    for (int j = i; j < parkedVehicles.Count && parkedVehicles[j].ParkingLot == parkedVehicles[i].ParkingLot; j++)
+                    int j = i;
+                    for (; j < parkedVehicles.Count && parkedVehicles[j].ParkingLot == parkedVehicles[i].ParkingLot; j++)
                         freeSpace -= Garage.NrOfLotsRequired[parkedVehicles[j].TypeOfVehicle];
-
                     if (nrLotsNeeded <= freeSpace + 0.00001)
                     {
                         candidateLot = parkedVehicles[i].ParkingLot;
                         break;
                     }
+                    i = j - 1;
                 }
             }
 

@@ -31,21 +31,21 @@
 			@Html.ActionLink(linkText: "Owner", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Owner", filterOld = filterOld }, htmlAttributes: (sortByParam == "Owner" ? sortedColumnHeader : columnHeader))
 		</th>
 
-		<th>
+		@*<th>
 			@Html.ActionLink(linkText: "LicenseNr", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "LicenseNr", filterOld = filterOld }, htmlAttributes: (sortByParam == "LicenseNr" ? sortedColumnHeader : columnHeader))
-		</th>
+		</th>*@
 
 		<th>
 			@Html.ActionLink(linkText: "TypeOfVehicle", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TypeOfVehicle", filterOld = filterOld }, htmlAttributes: (sortByParam == "TypeOfVehicle" ? sortedColumnHeader : columnHeader))
 		</th>
 
-		<th>
+		@*<th>
 			@Html.ActionLink(linkText: "Length", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Length", filterOld = filterOld }, htmlAttributes: (sortByParam == "Length" ? sortedColumnHeader : columnHeader))
-		</th>
+		</th>*@
 
-		<th>
+		@*<th>
 			@Html.ActionLink(linkText: "Weight", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "Weight", filterOld = filterOld }, htmlAttributes: (sortByParam == "Weight" ? sortedColumnHeader : columnHeader))
-		</th>
+		</th>*@
 
 		<th>
 			@Html.ActionLink(linkText: "TimeParked", actionName: "SortBy", controllerName: "Vehicles", routeValues: new { sortby = "TimeParked", filterOld = filterOld }, htmlAttributes: (sortByParam == "TimeParked" ? sortedColumnHeader : columnHeader))
@@ -72,21 +72,21 @@
                 @Html.DisplayFor( modelItem => item.Owner )
 			</td>
 
-			<td>
+			@*<td>
                 @Html.DisplayFor( modelItem => item.LicenseNr )
-			</td>
+			</td>*@
 
 			<td>
                 @Html.DisplayFor( modelItem => item.TypeOfVehicle )
 			</td>
 
-			<td>
+			@*<td>
                 @Html.DisplayFor( modelItem => item.Length )
-			</td>
+			</td>*@
 
-			<td>
+			@*<td>
                 @Html.DisplayFor( modelItem => item.Weight )
-			</td>
+			</td>*@
 
 			<td>
                 @Html.DisplayFor( modelItem => item.TimeParked )
@@ -99,11 +99,11 @@
 			</td>
 				}
 			}
-			@*<td>
-					@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-					@Html.ActionLink("Details", "Details", new { id=item.Id }) |
-					@Html.ActionLink("Delete", "Delete", new { id=item.Id })
-				</td>*@
+			<td>
+					@*@Html.ActionLink("Edit", "Edit", new { id=item.Id })*@
+					@Html.ActionLink("Details", "Details", new { id=item.Id })
+					@*@Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
+				</td>
 		</tr>
 	}
 

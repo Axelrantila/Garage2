@@ -27,12 +27,7 @@
 </p>
 
 <h3>Trivia: </h3>
-<b>Number of wheels in the garage:</b> @Math.Max(0,
-    Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.Car).Where(v => v.Parked == true).Count() * 4 +
-    Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.SUV).Where(v => v.Parked == true).Count() * 4 +
-    Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.Motorcycle).Where(v => v.Parked == true).Count() * 2 +
-    Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.CarTrailer).Where(v => v.Parked == true).Count() * (4 + 2) +
-    Model.Where(v => v.TypeOfVehicle == Garage2.Models.VehicleType.Truck).Where(v => v.Parked == true).Count() * 6)<br />
+<b>Number of wheels in the garage:</b> @Model.Where(v => v.Parked == true).Sum(v => v.NrOfWheels)<br />
 
 @{
     Dictionary<string, int> OwnerTable = new Dictionary<string, int>();

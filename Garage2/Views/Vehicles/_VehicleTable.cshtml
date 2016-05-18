@@ -21,6 +21,15 @@
             <label>Weight(kg)</label>
         </th>
         <th>
+            <label>Maker/Mode</label>
+        </th>
+        <th>
+            <label>Color</label>
+        </th>
+        <th>
+            <label>Number of Wheels</label>
+        </th>
+        <th>
             <label>Parking date</label>
         </th>
         <th>
@@ -49,6 +58,18 @@
             <td>
                 @Html.DisplayFor( modelItem => item.Weight )
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MakeAndModel)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.NrOfWheels)
+            </td>
+
             @Html.Partial("_ParkedTableData", item)
         </tr>
     }

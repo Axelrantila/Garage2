@@ -11,8 +11,15 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            <label>Parking lot</label>
+</dt>
+        <dd>
+            @Html.DisplayFor(model => model.ParkingLot)
+        </dd>
+
+        <dt>
             <label>Owner</label>
-        </dt>
+</dt>
 
         <dd>
             @Html.DisplayFor(model => model.Owner)
@@ -66,6 +73,26 @@
             @Html.DisplayFor(model => model.Parked)
         </dd>
 
+        <dt>
+            <label>Maker and model</label>
+</dt>
+        <dd>
+            @Html.DisplayFor(model => model.MakeAndModel)
+        </dd>
+
+        <dt>
+            <label>Color</label>
+</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Color)
+        </dd>
+
+        <dt>
+            <label>Number of Wheels</label>
+</dt>
+        <dd>
+           @Html.DisplayFor(model => model.NrOfWheels)
+        </dd>
     </dl>
 </div>
 <p>

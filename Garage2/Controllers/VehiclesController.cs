@@ -212,7 +212,7 @@ namespace Garage2.Controllers
                 else {
                     vehicle.TimeParked = DateTime.Now;
                     vehicle.Parked = false;
-                    ViewBag.UserFailMessage = Garage.ParkVehicle( vehicle, db );
+                    ViewBag.UserFailMessage = ViewBag.FailedParkMessage = Garage.ParkVehicle( vehicle, db );
 
                     db.Vehicles.Add( vehicle );
                     db.SaveChanges();
@@ -252,7 +252,7 @@ namespace Garage2.Controllers
                 entry.State = EntityState.Modified;
 
                 if ( chgVehicle.Parked && !oldVehicle.Parked )
-                    ViewBag.UserFailMessage = Garage.ParkVehicle( chgVehicle, db);
+                    ViewBag.UserFailMessage = ViewBag.FailedParkMessage = Garage.ParkVehicle( chgVehicle, db);
                 else
                     entry.Property( "TimeParked" ).IsModified = false;
 
@@ -275,7 +275,7 @@ namespace Garage2.Controllers
             bool wasParked = vehicle.Parked;
 
             if (!vehicle.Parked) {
-                ViewBag.UserFailMessage = Garage.ParkVehicle( vehicle, db);
+                ViewBag.UserFailMessage = ViewBag.FailedParkMessage = Garage.ParkVehicle( vehicle, db);
             }
             else {
                 vehicle.Parked = false;

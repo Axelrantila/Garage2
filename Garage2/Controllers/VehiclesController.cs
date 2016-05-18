@@ -191,13 +191,20 @@ namespace Garage2.Controllers
         {
             if ( ModelState.IsValid && vehicle.TypeOfVehicle != VehicleType.None ) {
 
-                vehicle.TimeParked = DateTime.Now;
-                vehicle.Parked = false;
-                ViewBag.UserFailMessage = Garage.ParkVehicle( vehicle, db);
+                vehicle.LicenseNr = vehicle.LicenseNr.Trim().ToUpper();
 
-                db.Vehicles.Add( vehicle );
-                db.SaveChanges();
-                return RedirectToAction( "Index" );
+                if ( db.Vehicles.Where( v => v.LicenseNr == vehicle.LicenseNr ).FirstOrDefault() != null ) {
+                    ViewBag.UserFailMessage = "An other vehicle have the same registation number!";
+                }
+                else {
+                    vehicle.TimeParked = DateTime.Now;
+                    vehicle.Parked = false;
+                    ViewBag.UserFailMessage = Garage.ParkVehicle( vehicle, db );
+
+                    db.Vehicles.Add( vehicle );
+                    db.SaveChanges();
+                    return RedirectToAction( "Index" );
+                }
             }
 
             return View( vehicle );

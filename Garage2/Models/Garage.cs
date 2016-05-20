@@ -39,6 +39,9 @@ namespace Garage2.Models
 
         public static bool IsAdjacent(int lot, int nrAdjacentNeeded)
         {
+            if ( nrAdjacentNeeded <= 1 )
+                return true;
+
             foreach (var seq in AdjacentLotSequences)
             {
                 if (seq.Item1 <= lot && lot <= seq.Item2)

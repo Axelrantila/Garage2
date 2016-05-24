@@ -197,6 +197,10 @@
     <Compile Include="Migrations\201605240729174_Garage25Changes2.Designer.cs">
       <DependentUpon>201605240729174_Garage25Changes2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605240822348_MemberPropertyOnVehicle.cs" />
+    <Compile Include="Migrations\201605240822348_MemberPropertyOnVehicle.Designer.cs">
+      <DependentUpon>201605240822348_MemberPropertyOnVehicle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Garage.cs" />
@@ -318,6 +322,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605240729174_Garage25Changes2.resx">
       <DependentUpon>201605240729174_Garage25Changes2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605240822348_MemberPropertyOnVehicle.resx">
+      <DependentUpon>201605240822348_MemberPropertyOnVehicle.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

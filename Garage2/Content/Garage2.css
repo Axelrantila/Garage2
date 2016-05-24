@@ -1,7 +1,7 @@
 ﻿.ColHeaderSorted
 {
-    font-style: italic;
-    /*text-decoration: underline;*/
+    /*font-style: italic;*/
+    text-decoration: underline;
     color: black;
 }
 

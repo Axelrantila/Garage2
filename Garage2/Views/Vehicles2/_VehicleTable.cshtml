@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Garage2.Models.Vehicle>
+
+<table class="table">
+    <tr>
+        <th>
+            <label>Parking lot</label>
+        </th>
+        <th>
+            <label>Owner</label>
+        </th>
+        <th>
+            <label>License Number</label>
+        </th>
+        <th>
+            <label>Type of Vehicle</label>
+        </th>
+        <th>
+            <label>Length(m)</label>
+        </th>
+        <th>
+            <label>Weight(kg)</label>
+        </th>
+        <th>
+            <label>Maker/Mode</label>
+        </th>
+        <th>
+            <label>Color</label>
+        </th>
+        <th>
+            <label>Number of Wheels</label>
+        </th>
+        <th>
+            <label>Parking date</label>
+        </th>
+        <th>
+            <label>Currently parked</label>
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach ( var item in Model ) {
+        @Html.Partial( "_ParkedTableData", item )
+    }
+    </>
+
+</table>
+
+

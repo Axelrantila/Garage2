@@ -187,11 +187,21 @@
     <Compile Include="Migrations\201605180726575_SomePropertiesAdded.Designer.cs">
       <DependentUpon>201605180726575_SomePropertiesAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605240725021_Garage25Changes.cs" />
+    <Compile Include="Migrations\201605240725021_Garage25Changes.Designer.cs">
+      <DependentUpon>201605240725021_Garage25Changes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605240729174_Garage25Changes2.cs" />
+    <Compile Include="Migrations\201605240729174_Garage25Changes2.Designer.cs">
+      <DependentUpon>201605240729174_Garage25Changes2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Garage.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Member.cs" />
+    <Compile Include="Models\TypeOfVehicle.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -290,6 +300,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605180726575_SomePropertiesAdded.resx">
       <DependentUpon>201605180726575_SomePropertiesAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605240725021_Garage25Changes.resx">
+      <DependentUpon>201605240725021_Garage25Changes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605240729174_Garage25Changes2.resx">
+      <DependentUpon>201605240729174_Garage25Changes2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

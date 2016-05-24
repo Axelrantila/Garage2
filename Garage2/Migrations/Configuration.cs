@@ -4,6 +4,7 @@ namespace Garage2.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using Models;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Garage2.DataAccessLayer.VehicleContext>
     {
@@ -12,7 +13,7 @@ namespace Garage2.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Garage2.DataAccessLayer.VehicleContext context)
+        protected override void Seed( Garage2.DataAccessLayer.VehicleContext context )
         {
             //  This method will be called after migrating to the latest version.
 
@@ -26,6 +27,16 @@ namespace Garage2.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            context.TypeOfVehicles.AddOrUpdate(
+                t => t.Name,
+                new TypeOfVehicle { Name = "Car" },
+                new TypeOfVehicle { Name = "SUV" },
+                new TypeOfVehicle { Name = "Motorcycle" },
+                new TypeOfVehicle { Name = "CarTrailer" },
+                new TypeOfVehicle { Name = "Truck" },
+                new TypeOfVehicle { Name = "Bus" }
+                );
         }
     }
 }

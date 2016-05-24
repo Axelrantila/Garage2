@@ -14,5 +14,7 @@ namespace Garage2.DataAccessLayer
         }
 
         public DbSet<Models.Vehicle> Vehicles { get; set; }
+        public DbSet<Models.Member> Members { get; set; }
+        public DbSet<Models.TypeOfVehicle> TypeOfVehicles { get; set; }
     }
 }

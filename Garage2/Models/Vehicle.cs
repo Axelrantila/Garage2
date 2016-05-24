@@ -23,6 +23,8 @@ namespace Garage2.Models
         //public int TypeOfVehicleId { get; set; }
         public TypeOfVehicle TypeOfVehicleNew { get; set; }
         public VehicleType TypeOfVehicle { get; set; }
+        public int? MemberId { get; set; }
+        public virtual Member Member { get; set; }
         public string MakeAndModel { get; set; }
         public string Color { get; set; }
         public float Length { get; set; }

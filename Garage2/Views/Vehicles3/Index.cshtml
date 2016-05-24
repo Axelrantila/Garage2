@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Garage2.Models.Vehicle>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Member.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TypeOfVehicleNew.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Owner)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LicenseNr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TypeOfVehicle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MakeAndModel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Color)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Length)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Weight)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NrOfWheels)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeParked)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Parked)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ParkingLot)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Member.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TypeOfVehicleNew.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Owner)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LicenseNr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TypeOfVehicle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MakeAndModel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Color)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Length)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Weight)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NrOfWheels)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeParked)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Parked)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ParkingLot)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

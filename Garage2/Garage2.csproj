@@ -202,6 +202,14 @@
     <Compile Include="Migrations\201605240822348_MemberPropertyOnVehicle.Designer.cs">
       <DependentUpon>201605240822348_MemberPropertyOnVehicle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605240921129_NewMemberProperties.cs" />
+    <Compile Include="Migrations\201605240921129_NewMemberProperties.Designer.cs">
+      <DependentUpon>201605240921129_NewMemberProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605240935345_NewMemberProperties3.cs" />
+    <Compile Include="Migrations\201605240935345_NewMemberProperties3.Designer.cs">
+      <DependentUpon>201605240935345_NewMemberProperties3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Garage.cs" />
@@ -291,11 +299,17 @@
     <Content Include="Views\Vehicles2\Details.cshtml" />
     <Content Include="Views\Vehicles2\Edit.cshtml" />
     <Content Include="Views\Vehicles2\Index.cshtml" />
-    <Content Include="Views\Members\Create.cshtml" />
     <Content Include="Views\Members\Delete.cshtml" />
     <Content Include="Views\Members\Details.cshtml" />
     <Content Include="Views\Members\Edit.cshtml" />
     <Content Include="Views\Members\Index.cshtml" />
+    <Content Include="Views\Members\Create.cshtml" />
+    <Content Include="Views\Vehicles2\Statistics.cshtml" />
+    <Content Include="Views\Vehicles2\_VehicleTable.cshtml" />
+    <Content Include="Views\Vehicles2\_Search.cshtml" />
+    <Content Include="Views\Vehicles2\Receipt.cshtml" />
+    <Content Include="Views\Vehicles2\_ParkedTableData.cshtml" />
+    <Content Include="Views\Vehicles2\_Create.cshtml" />
     <Content Include="Views\Vehicles3\Create.cshtml" />
     <Content Include="Views\Vehicles3\Delete.cshtml" />
     <Content Include="Views\Vehicles3\Details.cshtml" />
@@ -331,6 +345,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605240822348_MemberPropertyOnVehicle.resx">
       <DependentUpon>201605240822348_MemberPropertyOnVehicle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605240921129_NewMemberProperties.resx">
+      <DependentUpon>201605240921129_NewMemberProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605240935345_NewMemberProperties3.resx">
+      <DependentUpon>201605240935345_NewMemberProperties3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

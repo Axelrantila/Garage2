@@ -37,6 +37,13 @@ namespace Garage2.Migrations
                 new TypeOfVehicle { Name = "Truck" },
                 new TypeOfVehicle { Name = "Bus" }
                 );
+
+            context.Members.AddOrUpdate(
+                t => new { t.Name, t.EmailAddress, t.PhoneNr},
+                new Member { Name = "Axel Räntilä", EmailAddress = "axelrantila@axelrantila.com", PhoneNr = "+461234567890123456789"},
+                new Member { Name = "Lorem Ipsum", EmailAddress = "lorem@ipsum.li", PhoneNr = "+6666666666666666666666666"},
+                new Member { Name = "Reno Jackson", EmailAddress = "reno@leagueofexplorers.com", PhoneNr = "+3046646"}
+                );
         }
     }
 }

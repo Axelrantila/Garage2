@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Garage2.Models.Vehicle>
+
+<h2>Search for vehicles</h2>
+
+@using ( Ajax.BeginForm( new AjaxOptions { HttpMethod = "get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "vehicleTable" } ) ) {
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-md-2">Owner of the vehicle</label>
+            <div class="col-md-10">
+                <input type="search" name="Owner" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">License Number</label>
+            <div class="col-md-10">
+                <input type="search" name="LicenseNr" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Length(m)</label>
+            <div class="col-md-10">
+                <input type="search" name="Length" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Weight(kg)</label>
+            <div class="col-md-10">
+                <input type="search" name="Weight" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Maker or Model</label>
+            <div class="col-md-10">
+                <input type="search" name="MakeModel" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Color</label>
+            <div class="col-md-10">
+                <input type="search" name="Color" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Number of wheels</label>
+            <div class="col-md-10">
+                <input type="search" name="NumWheels" />
+            </div>
+        </div>
+
+        <!--Probably not the best solution here but it works-->
+        @if (Model.Count() > 0)
+        {
+            <div class="form-group">
+                <label class="control-label col-md-2">Vehicle type</label>
+                <div class="col-md-10">
+                    @Html.EnumDropDownListFor(model => model.First().TypeOfVehicle)<br />
+                    <i>Select none for any kind of vehicle</i>
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Any Parameter</label>
+
+            <div class="col-md-10">
+                <input type="checkbox" name="Any" value="Any"/><br />
+                <i>If uncheck, all conditions has to be met</i><br />
+                <i>If checked, the Currently Parked parameter is ignored</i>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Currently parked</label>
+            <div class="col-md-10">
+                <input type="checkbox" name="Parked" value="Parked" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Search" />
+            </div>
+        </div>
+    </div>
+}
+
+<div id="vehicleTable">
+    @Html.Partial( "_VehicleTable", Model )
+</div>

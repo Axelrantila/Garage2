@@ -16,9 +16,20 @@ namespace Garage2.Controllers
         private VehicleContext db = new VehicleContext();
 
         // GET: Members
-        public ActionResult Index()
+        public ActionResult Index(string Name, string EmailAddress, string PhoneNr)
         {
-            return View(db.Members.ToList());
+            if (string.IsNullOrEmpty(Name) && string.IsNullOrEmpty(EmailAddress) && string.IsNullOrEmpty(PhoneNr))
+            {
+                return View(db.Members.ToList());
+            }
+            else
+            {
+                return View(db.Members
+                .Where(m => (m.Name.Contains(Name) && !string.IsNullOrEmpty(Name))
+                || (m.EmailAddress.Contains(EmailAddress) && !string.IsNullOrEmpty(EmailAddress))
+                || (m.PhoneNr.Contains(PhoneNr) && !string.IsNullOrEmpty(PhoneNr)))
+                .ToList());
+            }
         }
 
         // GET: Members/Details/5

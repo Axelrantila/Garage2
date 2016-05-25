@@ -83,21 +83,14 @@ namespace Garage2.Controllers
 			if (!String.IsNullOrWhiteSpace(userMessage))
 				ViewBag.UserFailMessage = userMessage;
 
-			List<Vehicle> model = db.Vehicles.ToList();
-			//model = db.Vehicles.Where(item => item.Parked == true).ToList();
-			bool excludeOld = true;
-
-			try
+			List<Vehicle> model = null;
+			if (filterOld == bool.FalseString)	// Include vehicles that are no longer parked
 			{
-				excludeOld = Convert.ToBoolean(filterOld);
+				model = db.Vehicles.ToList();
 			}
-			catch (Exception)
+			else    // Filter out vehicles that are no longer parked
 			{
-			}
-
-			if (excludeOld)
-			{
-				model.RemoveAll(vehicle => vehicle.Parked == false);
+				model = db.Vehicles.Where(item => item.Parked == true).ToList();
 			}
 
 			return model;
@@ -115,6 +108,8 @@ namespace Garage2.Controllers
             {
                 return HttpNotFound();
             }
+            string nm = vehicle.TypeOfVehicleNew.Name;
+
             return View(vehicle);
         }
 
@@ -251,7 +246,7 @@ namespace Garage2.Controllers
 
 				vehicle.LicenseNr = vehicle.LicenseNr.Trim().ToUpper();
 
-				if (db.Vehicles.Where(v => v.LicenseNr == vehicle.LicenseNr).FirstOrDefault() != null)
+				if (db.Vehicles.Where(v => v.LicenseNr == vehicle.LicenseNr && v.Parked).FirstOrDefault() != null)
 				{
 					ViewBag.UserFailMessage = "An other vehicle have the same registation number!";
 				}
@@ -266,7 +261,10 @@ namespace Garage2.Controllers
 				}
 			}
 
-			return View(vehicle);
+            ViewBag.MemberId = new SelectList( db.Members, "Id", "Name" );
+            ViewBag.TypeOfVehicleNewId = new SelectList( db.TypeOfVehicles, "Id", "Name" );
+
+            return View(vehicle);
 		}
 
 		// GET: Vehicles2/Edit/5

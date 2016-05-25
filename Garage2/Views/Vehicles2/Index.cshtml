@@ -6,7 +6,8 @@
 	var sortByParam = Request.Params["sortBy"];
 	if (sortByParam == null) { sortByParam = "TimeParked"; }
 
-	string linkText = (filterOld == bool.TrueString ? "Include no longer parked vehicles" : "Exclude no longer parked vehicles");
+	string linkText = (filterOld == bool.TrueString ? "Include" : "Exclude");
+	linkText += " no longer parked vehicles";
 	string filterParam = (filterOld == bool.TrueString ? bool.FalseString : bool.TrueString);
 
 	var sortedColumnHeader = new { @class = "ColHeaderSorted" };
@@ -16,6 +17,7 @@
 }
 
 <h2>Parked Vehicles</h2>
+@Html.Partial("SearchVehicleSmall", Model)
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -50,7 +52,7 @@
             @Html.DisplayFor(modelItem => item.Owner)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TypeOfVehicleNew)
+            @Html.DisplayFor(modelItem => item.TypeOfVehicleNew.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.LicenseNr)

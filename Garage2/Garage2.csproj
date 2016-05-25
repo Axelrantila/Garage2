@@ -213,10 +213,6 @@
     <Compile Include="Migrations\201605241319229_VehicleTypeId_Added.Designer.cs">
       <DependentUpon>201605241319229_VehicleTypeId_Added.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605250920233_25Maj_1120.cs" />
-    <Compile Include="Migrations\201605250920233_25Maj_1120.Designer.cs">
-      <DependentUpon>201605250920233_25Maj_1120.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Garage.cs" />
@@ -358,9 +354,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605241319229_VehicleTypeId_Added.resx">
       <DependentUpon>201605241319229_VehicleTypeId_Added.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605250920233_25Maj_1120.resx">
-      <DependentUpon>201605250920233_25Maj_1120.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -16,14 +16,14 @@
 
         <dd>
             @*@Html.DisplayFor(model => model.Owner)*@
-            @Html.DisplayFor(model => model.Member.Name)
+            @Html.DisplayFor(model => model.Owner)
         </dd>
 
         <dt>
             <label>Parked by</label>
         </dt>
         <dd>
-
+            @Html.DisplayFor(model => model.Member.Name)
         </dd>
 
         <dt>

@@ -19,9 +19,9 @@
 <h2>Parked Vehicles</h2>
 @Html.Partial("SearchVehicleSmall", Model)
 
-@*<p>
+<p>
     @Html.ActionLink("Create New", "Create")
-</p>*@
+</p>
 <table class="table">
     <tr>
 		<th>
@@ -52,7 +52,7 @@
             @Html.DisplayFor(modelItem => item.Owner)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TypeOfVehicleNew)
+            @Html.DisplayFor(modelItem => item.TypeOfVehicleNew.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.LicenseNr)
@@ -70,8 +70,8 @@
 		}
         <td>
             @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |*@
-            @Html.ActionLink("Details", "Details", new { id=item.Id })
-            @*@Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
 }

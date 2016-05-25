@@ -313,6 +313,7 @@
     <Content Include="Views\Vehicles2\Receipt.cshtml" />
     <Content Include="Views\Vehicles2\_ParkedTableData.cshtml" />
     <Content Include="Views\Vehicles2\_Create.cshtml" />
+    <Content Include="Views\Vehicles2\NewReceipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

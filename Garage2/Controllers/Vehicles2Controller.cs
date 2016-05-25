@@ -115,6 +115,8 @@ namespace Garage2.Controllers
             {
                 return HttpNotFound();
             }
+            string nm = vehicle.TypeOfVehicleNew.Name;
+
             return View(vehicle);
         }
 
@@ -251,7 +253,7 @@ namespace Garage2.Controllers
 
 				vehicle.LicenseNr = vehicle.LicenseNr.Trim().ToUpper();
 
-				if (db.Vehicles.Where(v => v.LicenseNr == vehicle.LicenseNr).FirstOrDefault() != null)
+				if (db.Vehicles.Where(v => v.LicenseNr == vehicle.LicenseNr && v.Parked).FirstOrDefault() != null)
 				{
 					ViewBag.UserFailMessage = "An other vehicle have the same registation number!";
 				}
@@ -266,7 +268,10 @@ namespace Garage2.Controllers
 				}
 			}
 
-			return View(vehicle);
+            ViewBag.MemberId = new SelectList( db.Members, "Id", "Name" );
+            ViewBag.TypeOfVehicleNewId = new SelectList( db.TypeOfVehicles, "Id", "Name" );
+
+            return View(vehicle);
 		}
 
 		// GET: Vehicles2/Edit/5

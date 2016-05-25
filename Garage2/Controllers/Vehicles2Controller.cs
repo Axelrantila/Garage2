@@ -381,9 +381,11 @@ namespace Garage2.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Vehicle vehicle = db.Vehicles.Find(id);
+            ViewBag.FinalParkingCost = vehicle.HoursParked() * 60;
+
             db.Vehicles.Remove(vehicle);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index");   
         }
 
         protected override void Dispose(bool disposing)

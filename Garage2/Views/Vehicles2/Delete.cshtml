@@ -7,6 +7,18 @@
 <h2>Delete</h2>
 
 <h3>Are you sure you want to delete this?</h3>
+
+<p>
+    By deleting your vehicle from your database, you give us the permission to send you an invoice of
+    @{
+        int cost = Model.HoursParked() * 60;
+        @:<span>@cost</span>
+         @:SEK to you, due to be paid before
+            DateTime date = DateTime.Now.AddDays(14);
+            @: <span>@date</span>. Thank you for choosing to park with us.
+     }
+</p>
+
 <div>
     <h4>Vehicle</h4>
     <hr />
@@ -101,7 +113,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

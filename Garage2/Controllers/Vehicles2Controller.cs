@@ -83,21 +83,14 @@ namespace Garage2.Controllers
 			if (!String.IsNullOrWhiteSpace(userMessage))
 				ViewBag.UserFailMessage = userMessage;
 
-			List<Vehicle> model = db.Vehicles.ToList();
-			//model = db.Vehicles.Where(item => item.Parked == true).ToList();
-			bool excludeOld = true;
-
-			try
+			List<Vehicle> model = null;
+			if (filterOld == bool.FalseString)	// Include vehicles that are no longer parked
 			{
-				excludeOld = Convert.ToBoolean(filterOld);
+				model = db.Vehicles.ToList();
 			}
-			catch (Exception)
+			else    // Filter out vehicles that are no longer parked
 			{
-			}
-
-			if (excludeOld)
-			{
-				model.RemoveAll(vehicle => vehicle.Parked == false);
+				model = db.Vehicles.Where(item => item.Parked == true).ToList();
 			}
 
 			return model;

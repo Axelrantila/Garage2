@@ -26,3 +26,9 @@ a:active.ColHeaderSorted
 {
     color: black;
 }
+
+footer
+{
+    color: #e5e5e5;
+    background-color: #222222;
+}

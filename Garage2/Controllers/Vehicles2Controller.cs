@@ -135,9 +135,9 @@ namespace Garage2.Controllers
 			return View(vehicle);
 		}
 
-		public ActionResult Search(string Owner, string LicenseNr, string Length, string Weight, string MakeModel, string Color, string NumWheels, string TypeOfVehicle, string Any, string Parked, string userMessage)
+		public ActionResult Search(string Owner, string ParkedBy, string LicenseNr, string Length, string Weight, string MakeModel, string Color, string NumWheels, string TypeOfVehicle, string Any, string Parked, string userMessage)
 		{
-			if (!String.IsNullOrWhiteSpace(userMessage))
+			if (!string.IsNullOrWhiteSpace(userMessage))
 				ViewBag.UserFailMessage = userMessage;
 
 			float fLength = -1;
@@ -183,11 +183,13 @@ namespace Garage2.Controllers
 				.Where(v => string.IsNullOrEmpty(Color) || v.Color == Color)
 				.Where(v => string.IsNullOrEmpty(MakeModel) || v.MakeAndModel.Contains(MakeModel))
 				.Where(v => iNumWheels == -1 || v.NrOfWheels == iNumWheels)
+                .Where(v => string.IsNullOrEmpty(ParkedBy) || v.Member.Name == ParkedBy)
 				.ToList();
 			}
 			else {
 				result = result
 				.Where(v => v.Owner == Owner
+                || v.Member.Name == ParkedBy
 				|| v.LicenseNr == LicenseNr
 				|| v.Length == fLength
 				|| v.Weight == fWeight

@@ -20,7 +20,7 @@ namespace Garage2.Models
         public int Id { get; set; }
         public string Owner { get; set; }
         public string LicenseNr { get; set; }
-        //public int TypeOfVehicleId { get; set; }
+        public int TypeOfVehicleNewId { get; set; }
         public TypeOfVehicle TypeOfVehicleNew { get; set; }
         public VehicleType TypeOfVehicle { get; set; }
         public int? MemberId { get; set; }

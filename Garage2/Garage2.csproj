@@ -209,6 +209,10 @@
     <Compile Include="Migrations\201605240935345_NewMemberProperties3.Designer.cs">
       <DependentUpon>201605240935345_NewMemberProperties3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605241319229_VehicleTypeId_Added.cs" />
+    <Compile Include="Migrations\201605241319229_VehicleTypeId_Added.Designer.cs">
+      <DependentUpon>201605241319229_VehicleTypeId_Added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Garage.cs" />
@@ -345,6 +349,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605240935345_NewMemberProperties3.resx">
       <DependentUpon>201605240935345_NewMemberProperties3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605241319229_VehicleTypeId_Added.resx">
+      <DependentUpon>201605241319229_VehicleTypeId_Added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

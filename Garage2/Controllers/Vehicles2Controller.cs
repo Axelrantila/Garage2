@@ -225,7 +225,10 @@ namespace Garage2.Controllers
 			if (!String.IsNullOrWhiteSpace(userMessage))
 				ViewBag.UserFailMessage = userMessage;
 
-			return View();
+            ViewBag.MemberId = new SelectList( db.Members, "Id", "Name" );
+            ViewBag.TypeOfVehicleNewId = new SelectList( db.TypeOfVehicles, "Id", "Name" );
+
+            return View();
 		}
 
 		// POST: Vehicles2/Create
@@ -233,15 +236,15 @@ namespace Garage2.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Create([Bind(Include = "Owner,LicenseNr,TypeOfVehicle,MakeAndModel,Color,Length,Weight,NrOfWheels")] Vehicle vehicle, string userMessage)
+		public ActionResult Create([Bind(Include = "Owner,LicenseNr,TypeOfVehicleNewId,MemberId,MakeAndModel,Color,Length,Weight,NrOfWheels")] Vehicle vehicle, string userMessage)
 		{
 			if (!String.IsNullOrWhiteSpace(userMessage))
 				ViewBag.UserFailMessage = userMessage;
 
-			if (vehicle.TypeOfVehicle == VehicleType.None)
-			{
-				ViewBag.UserFailMessage = "You cannot select None as a vehicle type";
-			}
+			//if (vehicle.TypeOfVehicle == VehicleType.None)
+			//{
+			//	ViewBag.UserFailMessage = "You cannot select None as a vehicle type";
+			//}
 
 			else if (ModelState.IsValid)
 			{
@@ -278,6 +281,8 @@ namespace Garage2.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.MemberId = new SelectList( db.Members, "Id", "Name", vehicle.MemberId );
+            ViewBag.TypeOfVehicleNewId = new SelectList( db.TypeOfVehicles, "Id", "Name", vehicle.TypeOfVehicleNewId );
             return View(vehicle);
         }
 
@@ -286,15 +291,40 @@ namespace Garage2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicle,MakeAndModel,Color,Length,Weight,NrOfWheels,TimeParked,Parked,ParkingLot")] Vehicle vehicle)
+        public ActionResult Edit([Bind(Include = "Id,Owner,LicenseNr,TypeOfVehicleNewId,MemberId,MakeAndModel,Color,Length,Weight,NrOfWheels,TimeParked,Parked,ParkingLot")] Vehicle chgVehicle)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(vehicle).State = EntityState.Modified;
+            //if (ModelState.IsValid)
+            //{
+            //    db.Entry(vehicle).State = EntityState.Modified;
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+            //return View(vehicle);
+
+            //if ( !String.IsNullOrWhiteSpace( userMessage ) )
+            //    ViewBag.UserFailMessage = userMessage;
+            chgVehicle.TypeOfVehicle = VehicleType.None; //Temporary, remove later.
+
+            if ( ModelState.IsValid ) {
+                Vehicle oldVehicle = db.Vehicles.Find( chgVehicle.Id );
+                var entry = db.Entry( oldVehicle );
+                entry.State = EntityState.Detached;
+
+                entry = db.Entry( chgVehicle );
+                entry.State = EntityState.Modified;
+
+                if ( chgVehicle.Parked && !oldVehicle.Parked )
+                    ViewBag.UserFailMessage = ViewBag.FailedParkMessage = Garage.ParkVehicle( chgVehicle, db );
+                else
+                    entry.Property( "TimeParked" ).IsModified = false;
+
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if ( !chgVehicle.Parked && oldVehicle.Parked )
+                    return RedirectToAction( "Receipt", new { id = chgVehicle.Id } );
+                return RedirectToAction( "Index" );
             }
-            return View(vehicle);
+            return View( chgVehicle );
         }
 
         // GET: Vehicles2/Delete/5

@@ -46,7 +46,12 @@
     </td>
 
     <td>
-        <input @(Model.Parked ? "checked" : "") class="check-box" type="checkbox" onclick="togglePark(@Model.Id)" />
+        @if ( Model.Parked ) {
+            <input type="button" value="Check out"  onclick="togglePark(@Model.Id)" />
+        }
+
+        <!--input @(Model.Parked ? "checked" : "") class="check-box" type="checkbox" onclick="togglePark(@Model.Id)" / -->
+
         @(ViewBag.FailedParkMessage != null ? Html.Raw( "<span>" + ViewBag.FailedParkMessage + "</span>" ) : "")
     </td>
 </tr>

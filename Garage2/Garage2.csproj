@@ -172,7 +172,6 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\Vehicles2Controller.cs" />
-    <Compile Include="Controllers\Vehicles3Controller.cs" />
     <Compile Include="Controllers\VehiclesController.cs" />
     <Compile Include="DataAccessLayer\VehicleContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -209,6 +208,10 @@
     <Compile Include="Migrations\201605240935345_NewMemberProperties3.cs" />
     <Compile Include="Migrations\201605240935345_NewMemberProperties3.Designer.cs">
       <DependentUpon>201605240935345_NewMemberProperties3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605241319229_VehicleTypeId_Added.cs" />
+    <Compile Include="Migrations\201605241319229_VehicleTypeId_Added.Designer.cs">
+      <DependentUpon>201605241319229_VehicleTypeId_Added.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -310,11 +313,6 @@
     <Content Include="Views\Vehicles2\Receipt.cshtml" />
     <Content Include="Views\Vehicles2\_ParkedTableData.cshtml" />
     <Content Include="Views\Vehicles2\_Create.cshtml" />
-    <Content Include="Views\Vehicles3\Create.cshtml" />
-    <Content Include="Views\Vehicles3\Delete.cshtml" />
-    <Content Include="Views\Vehicles3\Details.cshtml" />
-    <Content Include="Views\Vehicles3\Edit.cshtml" />
-    <Content Include="Views\Vehicles3\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -351,6 +349,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605240935345_NewMemberProperties3.resx">
       <DependentUpon>201605240935345_NewMemberProperties3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605241319229_VehicleTypeId_Added.resx">
+      <DependentUpon>201605241319229_VehicleTypeId_Added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

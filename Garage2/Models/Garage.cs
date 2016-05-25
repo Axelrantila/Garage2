@@ -63,7 +63,8 @@ namespace Garage2.Models
         {
             var parkedVehicles = db.Vehicles.Where(v => v.Parked).OrderBy(v => v.ParkingLot).ToList();
 
-            int lot = TryParkSmallVehicle(vehicle, parkedVehicles);
+            //int lot = TryParkSmallVehicle(vehicle, parkedVehicles);
+            int lot = -1;
 
             if (lot < 0)
                 lot = TryParkVehicle(vehicle, parkedVehicles);
@@ -83,6 +84,7 @@ namespace Garage2.Models
 
         static private int NrOfIntLotsNeeded(Vehicle vehicle)
         {
+            return 1;
             return (int)Math.Ceiling(Garage.NrOfLotsRequired[vehicle.TypeOfVehicle] - 0.00001f);
         }
 
